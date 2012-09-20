@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:descendantFocusability="beforeDescendants"
+	android:focusableInTouchMode="true"
+	>
+
+	<LinearLayout android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="fill_parent">
+		<EditText android:id="@+id/NewItem"
+			android:layout_weight="1"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:enabled="false" />
+		
+		<Button android:id="@+id/AddItem"
+			android:text="@string/AddItem"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:enabled="false" />
+	</LinearLayout>
+	
+	<ListView android:id="@+id/Items"
+		android:layout_weight="1"
+		android:layout_height="0dp"
+		android:layout_width="fill_parent" />
+
+	<Button android:id="@+id/Refresh"
+		android:text="@string/Refresh"
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:enabled="false"
+		/>
+</LinearLayout>
