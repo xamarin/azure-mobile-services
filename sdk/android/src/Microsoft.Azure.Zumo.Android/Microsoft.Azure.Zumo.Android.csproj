@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7B774D3A-9136-4ED8-B2D6-09E577F9EC63}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.WindowsAzure.MobileServices</RootNamespace>
+    <AssemblyName>Microsoft.WindowsAzure.MobileServices.Android</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Android" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Json" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Core\IMobileServiceTable.Managed.cs">
+      <Link>Core\IMobileServiceTable.Managed.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Core\MobileServiceClient.Managed.cs">
+      <Link>Core\MobileServiceClient.Managed.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Core\MobileServiceInvalidOperationException.cs">
+      <Link>Core\MobileServiceInvalidOperationException.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Core\MobileServiceTable.Managed.cs">
+      <Link>Core\MobileServiceTable.Managed.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Resources.cs">
+      <Link>Resources.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Query\FilterBuildingExpressionVisitor.cs">
+      <Link>Table\Query\FilterBuildingExpressionVisitor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Query\ITotalCountProvider.cs">
+      <Link>Table\Query\ITotalCountProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Query\MobileServiceTableQueryDescription.cs">
+      <Link>Table\Query\MobileServiceTableQueryDescription.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Query\MobileServiceTableQueryTranslator.cs">
+      <Link>Table\Query\MobileServiceTableQueryTranslator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Query\PartialEvaulator.cs">
+      <Link>Table\Query\PartialEvaulator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Query\TotalCountEnumerable.cs">
+      <Link>Table\Query\TotalCountEnumerable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Query\TotalCountList.cs">
+      <Link>Table\Query\TotalCountList.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Query\VisitorHelper.cs">
+      <Link>Table\Query\VisitorHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Serialization\DataMemberJsonConverterAttribute.cs">
+      <Link>Table\Serialization\DataMemberJsonConverterAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Serialization\DataTableAttribute.cs">
+      <Link>Table\Serialization\DataTableAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Serialization\ICustomMobileServiceTableSerialization.cs">
+      <Link>Table\Serialization\ICustomMobileServiceTableSerialization.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Serialization\IDataMemberJsonConverter.cs">
+      <Link>Table\Serialization\IDataMemberJsonConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Serialization\MobileServiceTableSerializer.cs">
+      <Link>Table\Serialization\MobileServiceTableSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.WinMD\Core\IMobileServiceTable.cs">
+      <Link>Core\IMobileServiceTable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.WinMD\Core\JsonExtensions.cs">
+      <Link>Core\JsonExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.WinMD\Core\MobileServiceUser.cs">
+      <Link>Core\MobileServiceUser.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.WinMD\Core\Resources.cs">
+      <Link>Core\Resources.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.WinMD\Core\TypeExtensions.cs">
+      <Link>Core\TypeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.WinMD\ServiceFilter\IServiceFilterResponse.cs">
+      <Link>ServiceFilter\IServiceFilterResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.WinMD\ServiceFilter\ServiceFilterResponse.cs">
+      <Link>ServiceFilter\ServiceFilterResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.WinMD\ServiceFilter\ServiceFilterResponseStatus.cs">
+      <Link>ServiceFilter\ServiceFilterResponseStatus.cs</Link>
+    </Compile>
+    <Compile Include="Core\IMobileServiceTable.Generic.cs" />
+    <Compile Include="Core\MobileServiceClient.cs" />
+    <Compile Include="Core\MobileServiceTable.cs" />
+    <Compile Include="Core\MobileServiceTable.Generic.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceFilter\ComposedServiceFilter.cs" />
+    <Compile Include="ServiceFilter\IServiceFilter.cs" />
+    <Compile Include="ServiceFilter\IServiceFilterContinuation.cs" />
+    <Compile Include="ServiceFilter\IServiceFilterRequest.cs" />
+    <Compile Include="ServiceFilter\ServiceFilter.cs" />
+    <Compile Include="ServiceFilter\ServiceFilterRequest.cs" />
+    <Compile Include="Table\Query\MobileServiceTableQuery.cs" />
+    <Compile Include="Table\Serialization\SerializableMember.cs" />
+    <Compile Include="Table\Serialization\SerializableType.cs" />
+    <Compile Include="TypeExtensions.cs" />
+    <Compile Include="Windows.Data.Json\JsonArray.cs" />
+    <Compile Include="Windows.Data.Json\JsonErrorStatus.cs" />
+    <Compile Include="Windows.Data.Json\WrappedJsonExtensions.cs" />
+    <Compile Include="Windows.Data.Json\JsonValue.cs" />
+    <Compile Include="Windows.Data.Json\IJsonValue.cs" />
+    <Compile Include="Windows.Data.Json\JsonObject.cs" />
+    <Compile Include="Windows.Data.Json\JsonValueType.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
