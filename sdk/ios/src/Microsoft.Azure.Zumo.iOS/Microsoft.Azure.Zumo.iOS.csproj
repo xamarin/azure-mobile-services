@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8E35FADF-4690-4044-BA12-EB6011BA7486}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Microsoft.Azure.Zumo.iOS</RootNamespace>
+    <AssemblyName>MicrosoftAzureZumoiOS</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <DebugType>none</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
+    <WarningLevel>4</WarningLevel>
+    <MtouchLink>None</MtouchLink>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <DebugType>none</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
+    <WarningLevel>4</WarningLevel>
+    <MtouchLink>None</MtouchLink>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <WarningLevel>4</WarningLevel>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <WarningLevel>4</WarningLevel>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="monotouch" />
+    <Reference Include="System.Json" />
+    <Reference Include="System.Runtime.Serialization" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Core\" />
+    <Folder Include="ServiceFilter\" />
+    <Folder Include="Windows.Data.Json\" />
+    <Folder Include="Table\" />
+    <Folder Include="Table\Query\" />
+    <Folder Include="Table\Serialization\" />
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.WinMD\ServiceFilter\IServiceFilterResponse.cs">
+      <Link>ServiceFilter\IServiceFilterResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.WinMD\ServiceFilter\ServiceFilterResponse.cs">
+      <Link>ServiceFilter\ServiceFilterResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.WinMD\ServiceFilter\ServiceFilterResponseStatus.cs">
+      <Link>ServiceFilter\ServiceFilterResponseStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\android\src\Microsoft.Azure.Zumo.Android\Windows.Data.Json\IJsonValue.cs">
+      <Link>Windows.Data.Json\IJsonValue.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\android\src\Microsoft.Azure.Zumo.Android\Windows.Data.Json\JsonArray.cs">
+      <Link>Windows.Data.Json\JsonArray.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\android\src\Microsoft.Azure.Zumo.Android\Windows.Data.Json\JsonErrorStatus.cs">
+      <Link>Windows.Data.Json\JsonErrorStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\android\src\Microsoft.Azure.Zumo.Android\Windows.Data.Json\JsonObject.cs">
+      <Link>Windows.Data.Json\JsonObject.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\android\src\Microsoft.Azure.Zumo.Android\Windows.Data.Json\JsonValue.cs">
+      <Link>Windows.Data.Json\JsonValue.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\android\src\Microsoft.Azure.Zumo.Android\Windows.Data.Json\JsonValueType.cs">
+      <Link>Windows.Data.Json\JsonValueType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\android\src\Microsoft.Azure.Zumo.Android\ServiceFilter\ComposedServiceFilter.cs">
+      <Link>ServiceFilter\ComposedServiceFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\android\src\Microsoft.Azure.Zumo.Android\ServiceFilter\IServiceFilter.cs">
+      <Link>ServiceFilter\IServiceFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\android\src\Microsoft.Azure.Zumo.Android\ServiceFilter\IServiceFilterContinuation.cs">
+      <Link>ServiceFilter\IServiceFilterContinuation.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\android\src\Microsoft.Azure.Zumo.Android\ServiceFilter\IServiceFilterRequest.cs">
+      <Link>ServiceFilter\IServiceFilterRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\android\src\Microsoft.Azure.Zumo.Android\ServiceFilter\ServiceFilter.cs">
+      <Link>ServiceFilter\ServiceFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\android\src\Microsoft.Azure.Zumo.Android\ServiceFilter\ServiceFilterRequest.cs">
+      <Link>ServiceFilter\ServiceFilterRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.WinMD\Core\IMobileServiceTable.cs">
+      <Link>Core\IMobileServiceTable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.WinMD\Core\JsonExtensions.cs">
+      <Link>Core\JsonExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.WinMD\Core\MobileServiceUser.cs">
+      <Link>Core\MobileServiceUser.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.WinMD\Core\Resources.cs">
+      <Link>Core\Resources.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.WinMD\Core\TypeExtensions.cs">
+      <Link>Core\TypeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Core\IMobileServiceTable.Managed.cs">
+      <Link>Core\IMobileServiceTable.Managed.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Core\MobileServiceClient.Managed.cs">
+      <Link>Core\MobileServiceClient.Managed.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Core\MobileServiceInvalidOperationException.cs">
+      <Link>Core\MobileServiceInvalidOperationException.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Core\MobileServiceTable.Managed.cs">
+      <Link>Core\MobileServiceTable.Managed.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\android\src\Microsoft.Azure.Zumo.Android\Core\IMobileServiceTable.Generic.cs">
+      <Link>Core\IMobileServiceTable.Generic.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\android\src\Microsoft.Azure.Zumo.Android\Core\MobileServiceTable.cs">
+      <Link>Core\MobileServiceTable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\android\src\Microsoft.Azure.Zumo.Android\Core\MobileServiceTable.Generic.cs">
+      <Link>Core\MobileServiceTable.Generic.cs</Link>
+    </Compile>
+    <Compile Include="Core\MobileServiceClient.cs" />
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Query\FilterBuildingExpressionVisitor.cs">
+      <Link>Table\Query\FilterBuildingExpressionVisitor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Query\MobileServiceTableQueryDescription.cs">
+      <Link>Table\Query\MobileServiceTableQueryDescription.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Query\MobileServiceTableQueryTranslator.cs">
+      <Link>Table\Query\MobileServiceTableQueryTranslator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Query\PartialEvaulator.cs">
+      <Link>Table\Query\PartialEvaulator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Query\VisitorHelper.cs">
+      <Link>Table\Query\VisitorHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\android\src\Microsoft.Azure.Zumo.Android\Table\Query\MobileServiceTableQuery.cs">
+      <Link>Table\Query\MobileServiceTableQuery.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\android\src\Microsoft.Azure.Zumo.Android\Table\Serialization\SerializableMember.cs">
+      <Link>Table\Serialization\SerializableMember.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\android\src\Microsoft.Azure.Zumo.Android\Table\Serialization\SerializableType.cs">
+      <Link>Table\Serialization\SerializableType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Resources.cs">
+      <Link>Resources.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\android\src\Microsoft.Azure.Zumo.Android\TypeExtensions.cs">
+      <Link>TypeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="ExpressionVisitor.cs" />
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Serialization\DataMemberJsonConverterAttribute.cs">
+      <Link>Table\Serialization\DataMemberJsonConverterAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Serialization\DataTableAttribute.cs">
+      <Link>Table\Serialization\DataTableAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Serialization\ICustomMobileServiceTableSerialization.cs">
+      <Link>Table\Serialization\ICustomMobileServiceTableSerialization.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Serialization\IDataMemberJsonConverter.cs">
+      <Link>Table\Serialization\IDataMemberJsonConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Serialization\MobileServiceTableSerializer.cs">
+      <Link>Table\Serialization\MobileServiceTableSerializer.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\..\..\android\src\Microsoft.Azure.Zumo.Android\Windows.Data.Json\WrappedJsonExtensions.cs">
+      <Link>Windows.Data.Json\WrappedJsonExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Query\ITotalCountProvider.cs">
+      <Link>Table\Query\ITotalCountProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Query\TotalCountEnumerable.cs">
+      <Link>Table\Query\TotalCountEnumerable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Query\TotalCountList.cs">
+      <Link>Table\Query\TotalCountList.cs</Link>
+    </Compile>
+  </ItemGroup>
+</Project>

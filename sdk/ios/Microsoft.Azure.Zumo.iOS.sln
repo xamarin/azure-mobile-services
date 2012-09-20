@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZumoTests", "test\ZumoTests.csproj", "{2297B76A-6A0C-46EC-83E8-BF88A05C50CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Zumo.iOS", "src\Microsoft.Azure.Zumo.iOS\Microsoft.Azure.Zumo.iOS.csproj", "{8E35FADF-4690-4044-BA12-EB6011BA7486}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Release|iPhone = Release|iPhone
+		Ad-Hoc|iPhone = Ad-Hoc|iPhone
+		AppStore|iPhone = AppStore|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2297B76A-6A0C-46EC-83E8-BF88A05C50CA}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
+		{2297B76A-6A0C-46EC-83E8-BF88A05C50CA}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
+		{2297B76A-6A0C-46EC-83E8-BF88A05C50CA}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
+		{2297B76A-6A0C-46EC-83E8-BF88A05C50CA}.AppStore|iPhone.Build.0 = AppStore|iPhone
+		{2297B76A-6A0C-46EC-83E8-BF88A05C50CA}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{2297B76A-6A0C-46EC-83E8-BF88A05C50CA}.Debug|iPhone.Build.0 = Debug|iPhone
+		{2297B76A-6A0C-46EC-83E8-BF88A05C50CA}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{2297B76A-6A0C-46EC-83E8-BF88A05C50CA}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{2297B76A-6A0C-46EC-83E8-BF88A05C50CA}.Release|iPhone.ActiveCfg = Release|iPhone
+		{2297B76A-6A0C-46EC-83E8-BF88A05C50CA}.Release|iPhone.Build.0 = Release|iPhone
+		{2297B76A-6A0C-46EC-83E8-BF88A05C50CA}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{2297B76A-6A0C-46EC-83E8-BF88A05C50CA}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{8E35FADF-4690-4044-BA12-EB6011BA7486}.Ad-Hoc|iPhone.ActiveCfg = Debug|iPhone
+		{8E35FADF-4690-4044-BA12-EB6011BA7486}.Ad-Hoc|iPhone.Build.0 = Debug|iPhone
+		{8E35FADF-4690-4044-BA12-EB6011BA7486}.AppStore|iPhone.ActiveCfg = Debug|iPhone
+		{8E35FADF-4690-4044-BA12-EB6011BA7486}.AppStore|iPhone.Build.0 = Debug|iPhone
+		{8E35FADF-4690-4044-BA12-EB6011BA7486}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{8E35FADF-4690-4044-BA12-EB6011BA7486}.Debug|iPhone.Build.0 = Debug|iPhone
+		{8E35FADF-4690-4044-BA12-EB6011BA7486}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{8E35FADF-4690-4044-BA12-EB6011BA7486}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{8E35FADF-4690-4044-BA12-EB6011BA7486}.Release|iPhone.ActiveCfg = Release|iPhone
+		{8E35FADF-4690-4044-BA12-EB6011BA7486}.Release|iPhone.Build.0 = Release|iPhone
+		{8E35FADF-4690-4044-BA12-EB6011BA7486}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{8E35FADF-4690-4044-BA12-EB6011BA7486}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = test\ZumoTests.csproj
+	EndGlobalSection
+EndGlobal
