@@ -121,9 +121,6 @@
     <Compile Include="..\..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Core\IMobileServiceTable.Managed.cs">
       <Link>Core\IMobileServiceTable.Managed.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Core\MobileServiceClient.Managed.cs">
-      <Link>Core\MobileServiceClient.Managed.cs</Link>
-    </Compile>
     <Compile Include="..\..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Core\MobileServiceInvalidOperationException.cs">
       <Link>Core\MobileServiceInvalidOperationException.cs</Link>
     </Compile>

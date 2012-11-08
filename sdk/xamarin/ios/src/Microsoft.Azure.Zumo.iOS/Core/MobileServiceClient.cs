@@ -38,8 +38,13 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// <summary>
         /// Relative URI fragment of the login endpoint.
         /// </summary>
-        private const string LoginAsyncUriFragment = "login?mode=authenticationToken";
-
+        private const string LoginAsyncUriFragment = "login";
+        
+        /// <summary>
+        /// Relative URI fragment of the login/done endpoint.
+        /// </summary>
+        private const string LoginAsyncDoneUriFragment = "login/done";
+        
         /// <summary>
         /// Name of the Installation ID header included on each request.
         /// </summary>
@@ -264,15 +269,15 @@ namespace Microsoft.WindowsAzure.MobileServices
             JsonObject request = new JsonObject()
                 .Set(LoginAsyncAuthenticationTokenKey, authenticationToken);
             
-			return this.RequestAsync("POST", LoginAsyncUriFragment, request)
-				.ContinueWith (t =>
-				{
-					// Get the Mobile Services auth token and user data
-					this.currentUserAuthenticationToken = t.Result.Get(LoginAsyncAuthenticationTokenKey).AsString();
-					this.CurrentUser = new MobileServiceUser(t.Result.Get("user").Get("userId").AsString());
-
-					return this.CurrentUser;
-				});
+            return this.RequestAsync("POST", LoginAsyncUriFragment, request)
+                .ContinueWith (t =>
+                {
+                    // Get the Mobile Services auth token and user data
+                    this.currentUserAuthenticationToken = t.Result.Get(LoginAsyncAuthenticationTokenKey).AsString();
+                    this.CurrentUser = new MobileServiceUser(t.Result.Get("user").Get("userId").AsString());
+                    
+                    return this.CurrentUser;
+                });
         }
 
         /// <summary>
@@ -329,22 +334,22 @@ namespace Microsoft.WindowsAzure.MobileServices
                 request.ContentType = RequestJsonContentType;
                 request.Content = content.Stringify();
             }
-
-			// Send the request and get the response back as JSON
-	        return ServiceFilter.ApplyAsync (request, this.filter)
-				.ContinueWith (t =>
-				{
-					var response = t.Result;
-					IJsonValue body = GetResponseJsonAsync (response);
-
-					// Throw errors for any failing responses
-					if (response.ResponseStatus != ServiceFilterResponseStatus.Success || response.StatusCode >= 400)
-					{
-						ThrowInvalidResponse(request, response, body);
-					}
-
-					return body;
-				});
+            
+            // Send the request and get the response back as JSON
+            return ServiceFilter.ApplyAsync (request, this.filter)
+                .ContinueWith (t =>
+                {
+                    var response = t.Result;
+                    IJsonValue body = GetResponseJsonAsync (response);
+                    
+                    // Throw errors for any failing responses
+                    if (response.ResponseStatus != ServiceFilterResponseStatus.Success || response.StatusCode >= 400)
+                    {
+                        ThrowInvalidResponse(request, response, body);
+                    }
+                    
+                    return body;
+                });
         }
 
         /// <summary>
@@ -380,7 +385,7 @@ namespace Microsoft.WindowsAzure.MobileServices
             Debug.Assert(response != null, "response cannot be null!");
             Debug.Assert(
                 response.ResponseStatus != ServiceFilterResponseStatus.Success ||
-                    response.StatusCode >= 400,
+                response.StatusCode >= 400,
                 "response should be failing!");
 
             // Create either an invalid response or connection failed message
@@ -389,30 +394,36 @@ namespace Microsoft.WindowsAzure.MobileServices
             string message = null;
             if (response.StatusCode >= 400)
             {
-                // Get the error message, but default to the status message
-                // if there's no error message present.
-                string error =
-                    body.Get("error").AsString() ??
-                    body.Get("description").AsString() ??
-                    response.StatusDescription;
-
-                // Get the status code, text
-                int code = body.Get("code").AsInteger() ?? response.StatusCode;
-
-                // Combine the pieces and throw the exception
-                message =
-                    string.Format(CultureInfo.InvariantCulture,
-                        Resources.MobileServiceClient_ThrowInvalidResponse_ErrorMessage,
-                        code,
-                        (HttpStatusCode)code,
-                        error,
-                        response.Content);
+                if (body != null)
+                {
+                    if (body.ValueType == JsonValueType.String)
+                    {
+                        // User scripts might return errors with just a plain string message as the
+                        // body content, so use it as the exception message
+                        message = body.GetString();
+                    }
+                    else if (body.ValueType == JsonValueType.Object)
+                    {
+                        // Get the error message, but default to the status description
+                        // below if there's no error message present.
+                        message = body.Get("error").AsString() ??
+                            body.Get("description").AsString();
+                    }
+                }
+                
+                if (string.IsNullOrWhiteSpace(message))
+                {
+                    message = string.Format(
+                        CultureInfo.InvariantCulture,
+                        Resources.MobileServiceClient_ErrorMessage,
+                        response.StatusDescription);
+                }
             }
             else
-            {                
+            {
                 message = string.Format(
                     CultureInfo.InvariantCulture,
-                    Resources.MobileServiceClient_ThrowConnectionFailure_ErrorMessage,
+                    Resources.MobileServiceClient_ErrorMessage,
                     response.ResponseStatus);
             }
             
