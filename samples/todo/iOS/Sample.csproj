@@ -87,9 +87,6 @@
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="MicrosoftAzureZumoiOS">
-      <HintPath>MicrosoftAzureZumoiOS.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -109,4 +106,10 @@
     <InterfaceDefinition Include="MainStoryboard.storyboard" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\sdk\xamarin\ios\src\Microsoft.Azure.Zumo.iOS\Microsoft.Azure.Zumo.iOS.csproj">
+      <Project>{8E35FADF-4690-4044-BA12-EB6011BA7486}</Project>
+      <Name>Microsoft.Azure.Zumo.iOS</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
