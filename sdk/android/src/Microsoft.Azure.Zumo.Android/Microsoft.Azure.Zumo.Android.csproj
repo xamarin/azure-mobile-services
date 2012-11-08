@@ -45,9 +45,6 @@
     <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Core\IMobileServiceTable.Managed.cs">
       <Link>Core\IMobileServiceTable.Managed.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Core\MobileServiceClient.Managed.cs">
-      <Link>Core\MobileServiceClient.Managed.cs</Link>
-    </Compile>
     <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Core\MobileServiceInvalidOperationException.cs">
       <Link>Core\MobileServiceInvalidOperationException.cs</Link>
     </Compile>
@@ -101,6 +98,9 @@
     </Compile>
     <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.WinMD\Core\JsonExtensions.cs">
       <Link>Core\JsonExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.WinMD\Core\MobileServiceAuthenticationProvider.cs">
+      <Link>Core\MobileServiceAuthenticationProvider.cs</Link>
     </Compile>
     <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.WinMD\Core\MobileServiceUser.cs">
       <Link>Core\MobileServiceUser.cs</Link>
@@ -172,7 +172,9 @@
       <Link>Xamarin.Auth\WebRedirectAuthenticator.cs</Link>
     </Compile>
     <Compile Include="Core\IMobileServiceTable.Generic.cs" />
+    <Compile Include="Core\MobileServiceClient.Android.cs" />
     <Compile Include="Core\MobileServiceClient.cs" />
+    <Compile Include="Core\MobileServiceClient.Managed.cs" />
     <Compile Include="Core\MobileServiceTable.cs" />
     <Compile Include="Core\MobileServiceTable.Generic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

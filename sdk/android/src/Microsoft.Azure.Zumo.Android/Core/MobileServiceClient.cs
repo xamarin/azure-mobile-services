@@ -39,7 +39,12 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// <summary>
         /// Relative URI fragment of the login endpoint.
         /// </summary>
-        private const string LoginAsyncUriFragment = "login?mode=authenticationToken";
+        private const string LoginAsyncUriFragment = "login";
+
+        /// <summary>
+        /// Relative URI fragment of the login/done endpoint.
+        /// </summary>
+        private const string LoginAsyncDoneUriFragment = "login/done";
 
         /// <summary>
         /// Name of the Installation ID header included on each request.
@@ -86,6 +91,15 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// applied.
         /// </summary>
         private IServiceFilter filter = null;
+
+        /// <summary>
+        /// Indicates whether a login operation is currently in progress.
+        /// </summary>
+        public bool LoginInProgress
+        {
+            get;
+            private set;
+        }
 
         /// <summary>
         /// Initialize the shared applicationInstallationId.
@@ -397,33 +411,39 @@ namespace Microsoft.WindowsAzure.MobileServices
             string message = null;
             if (response.StatusCode >= 400)
             {
-                // Get the error message, but default to the status message
-                // if there's no error message present.
-                string error =
-                    body.Get("error").AsString() ??
-                    body.Get("description").AsString() ??
-                    response.StatusDescription;
-
-                // Get the status code, text
-                int code = body.Get("code").AsInteger() ?? response.StatusCode;
-
-                // Combine the pieces and throw the exception
-                message =
-                    string.Format(CultureInfo.InvariantCulture,
-                        Resources.MobileServiceClient_ThrowInvalidResponse_ErrorMessage,
-                        code,
-                        (HttpStatusCode)code,
-                        error,
-                        response.Content);
+                if (body != null)
+                {
+                    if (body.ValueType == JsonValueType.String)
+                    {
+                        // User scripts might return errors with just a plain string message as the
+                        // body content, so use it as the exception message
+                        message = body.GetString();
+                    }
+                    else if (body.ValueType == JsonValueType.Object)
+                    {
+                        // Get the error message, but default to the status description
+                        // below if there's no error message present.
+                        message = body.Get("error").AsString() ??
+                                  body.Get("description").AsString();
+                    }
+                }
+                
+                if (string.IsNullOrWhiteSpace(message))
+                {
+                    message = string.Format(
+                        CultureInfo.InvariantCulture,
+                        Resources.MobileServiceClient_ErrorMessage,
+                        response.StatusDescription);
+                }
             }
             else
-            {                
+            {
                 message = string.Format(
                     CultureInfo.InvariantCulture,
-                    Resources.MobileServiceClient_ThrowConnectionFailure_ErrorMessage,
+                    Resources.MobileServiceClient_ErrorMessage,
                     response.ResponseStatus);
             }
-            
+
             // Combine the pieces and throw the exception
             throw CreateMobileServiceException(message, request, response);
         }

@@ -58,7 +58,8 @@ namespace Microsoft.WindowsAzure.MobileServices
             DataContractAttribute dataContractAttribute =
                 type.GetCustomAttribute<DataContractAttribute>(true);
 
-            if (dataTableAttribute != null)
+            if (dataTableAttribute != null &&
+                !string.IsNullOrWhiteSpace(dataTableAttribute.Name))
             {
                 this.TableName = dataTableAttribute.Name;
             }
@@ -86,7 +87,7 @@ namespace Microsoft.WindowsAzure.MobileServices
             foreach (FieldInfo field in GetSerializableMembers(hasContract, type.GetFields))
             {
                 SerializableMember member = new SerializableMember(field);
-                this.Members.Add(member.Name ?? member.MemberName, member);
+                this.Members.Add(member.Name, member);
             }
 
             // Ensure we have a valid ID field (and check a couple of variants
