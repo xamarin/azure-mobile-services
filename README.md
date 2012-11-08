@@ -15,7 +15,7 @@ To get the source code of our SDKs and samples via **git** just type:
 
 ## Xamarin and Azure: MonoTouch for iOS and Mono for Android Client SDK
 
-Our client SDK makes it incredibly easy to use Mobile Services from your MonoTouch for iOS and Mono for Android applications. You can download the source code using the instructions above and then you will find the SDKs under ```/azure-mobile-services/sdk/ios``` and ```/azure-mobile-services/sdk/android```.
+Our client SDK makes it incredibly easy to use Mobile Services from your MonoTouch for iOS and Mono for Android applications. You can download the source code using the instructions above and then you will find the SDKs under ```/azure-mobile-services/sdk/xamarin/ios``` and ```/azure-mobile-services/sdk/xamarin/android```.
 
 ### Prerequisities
 
