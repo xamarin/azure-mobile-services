@@ -74,13 +74,13 @@
     <AndroidResource Include="Resources\Drawable\Icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.Azure.Zumo.Android.csproj">
+    <Content Include="Properties\AndroidManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\sdk\android\src\Microsoft.Azure.Zumo.Android\Microsoft.Azure.Zumo.Android.csproj">
       <Project>{7b774d3a-9136-4ed8-b2d6-09e577f9ec63}</Project>
       <Name>Microsoft.Azure.Zumo.Android</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
