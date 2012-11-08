@@ -4,3 +4,4 @@ obj
 *.DotSettings
 *.user
 *.userprefs
+*.ide
