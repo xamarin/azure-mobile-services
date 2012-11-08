@@ -92,29 +92,38 @@ namespace Microsoft.WindowsAzure.MobileServices
         private IServiceFilter filter = null;
 
         /// <summary>
+        /// Indicates whether a login operation is currently in progress.
+        /// </summary>
+        public bool LoginInProgress
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// Initialize the shared applicationInstallationId.
         /// </summary>
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Initialization is nontrivial.")]
         static MobileServiceClient()
         {
-			var defaults = NSUserDefaults.StandardUserDefaults;
-			string setting = defaults.StringForKey (ConfigureAsyncInstallationConfigPath);
-			if (setting != null)
-			{
-				JsonValue config;
-				if (JsonValue.TryParse (setting, out config))
-					applicationInstallationId = config.Get (ConfigureAsyncApplicationIdKey).AsString();
-			}
+            var defaults = NSUserDefaults.StandardUserDefaults;
+            string setting = defaults.StringForKey (ConfigureAsyncInstallationConfigPath);
+            if (setting != null)
+            {
+                JsonValue config;
+                if (JsonValue.TryParse (setting, out config))
+                    applicationInstallationId = config.Get (ConfigureAsyncApplicationIdKey).AsString();
+            }
 
-			if (applicationInstallationId == null)
-			{
-				applicationInstallationId = Guid.NewGuid().ToString();
-				string configText =
-					new JsonObject().Set (ConfigureAsyncApplicationIdKey, applicationInstallationId).Stringify();
-
-				defaults.SetString (configText, ConfigureAsyncInstallationConfigPath);
-				defaults.Synchronize();
-			}
+            if (applicationInstallationId == null)
+            {
+                applicationInstallationId = Guid.NewGuid().ToString();
+                string configText =
+                    new JsonObject().Set (ConfigureAsyncApplicationIdKey, applicationInstallationId).Stringify();
+                
+                defaults.SetString (configText, ConfigureAsyncInstallationConfigPath);
+                defaults.Synchronize();
+            }
         }
 
         /// <summary>
