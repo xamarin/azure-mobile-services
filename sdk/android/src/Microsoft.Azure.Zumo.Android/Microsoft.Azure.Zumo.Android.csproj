@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;XAMARIN_AUTH_INTERNAL PLATFORM_ANDROID</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -119,6 +119,57 @@
     </Compile>
     <Compile Include="..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.WinMD\ServiceFilter\ServiceFilterResponseStatus.cs">
       <Link>ServiceFilter\ServiceFilterResponseStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\xamarin\libs\Xamarin.Auth\src\Xamarin.Auth.Android\ActivityEx.cs">
+      <Link>Xamarin.Auth\Android\ActivityEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\xamarin\libs\Xamarin.Auth\src\Xamarin.Auth.Android\ActivityStateRepository.cs">
+      <Link>Xamarin.Auth\Android\ActivityStateRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\xamarin\libs\Xamarin.Auth\src\Xamarin.Auth.Android\AndroidAccountStore.cs">
+      <Link>Xamarin.Auth\Android\AndroidAccountStore.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\xamarin\libs\Xamarin.Auth\src\Xamarin.Auth.Android\FormAuthenticatorActivity.cs">
+      <Link>Xamarin.Auth\Android\FormAuthenticatorActivity.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\xamarin\libs\Xamarin.Auth\src\Xamarin.Auth.Android\WebAuthenticatorActivity.cs">
+      <Link>Xamarin.Auth\Android\WebAuthenticatorActivity.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\xamarin\libs\Xamarin.Auth\src\Xamarin.Auth\Account.cs">
+      <Link>Xamarin.Auth\Account.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\xamarin\libs\Xamarin.Auth\src\Xamarin.Auth\AccountStore.cs">
+      <Link>Xamarin.Auth\AccountStore.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\xamarin\libs\Xamarin.Auth\src\Xamarin.Auth\Authenticator.cs">
+      <Link>Xamarin.Auth\Authenticator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\xamarin\libs\Xamarin.Auth\src\Xamarin.Auth\AuthException.cs">
+      <Link>Xamarin.Auth\AuthException.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\xamarin\libs\Xamarin.Auth\src\Xamarin.Auth\ExceptionEx.cs">
+      <Link>Xamarin.Auth\ExceptionEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\xamarin\libs\Xamarin.Auth\src\Xamarin.Auth\FormAuthenticator.cs">
+      <Link>Xamarin.Auth\FormAuthenticator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\xamarin\libs\Xamarin.Auth\src\Xamarin.Auth\OAuth1.cs">
+      <Link>Xamarin.Auth\OAuth1.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\xamarin\libs\Xamarin.Auth\src\Xamarin.Auth\OAuth1Authenticator.cs">
+      <Link>Xamarin.Auth\OAuth1Authenticator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\xamarin\libs\Xamarin.Auth\src\Xamarin.Auth\OAuth2Authenticator.cs">
+      <Link>Xamarin.Auth\OAuth2Authenticator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\xamarin\libs\Xamarin.Auth\src\Xamarin.Auth\WebAuthenticator.cs">
+      <Link>Xamarin.Auth\WebAuthenticator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\xamarin\libs\Xamarin.Auth\src\Xamarin.Auth\WebEx.cs">
+      <Link>Xamarin.Auth\WebEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\xamarin\libs\Xamarin.Auth\src\Xamarin.Auth\WebRedirectAuthenticator.cs">
+      <Link>Xamarin.Auth\WebRedirectAuthenticator.cs</Link>
     </Compile>
     <Compile Include="Core\IMobileServiceTable.Generic.cs" />
     <Compile Include="Core\MobileServiceClient.cs" />
