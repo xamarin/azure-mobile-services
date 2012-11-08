@@ -17,6 +17,7 @@
     <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
     <WarningLevel>4</WarningLevel>
     <MtouchLink>None</MtouchLink>
+    <DefineConstants>PLATFORM_IOS XAMARIN_AUTH_INTERNAL</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -24,6 +25,7 @@
     <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
     <WarningLevel>4</WarningLevel>
     <MtouchLink>None</MtouchLink>
+    <DefineConstants>PLATFORM_IOS XAMARIN_AUTH_INTERNAL</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugType>none</DebugType>
@@ -31,6 +33,7 @@
     <OutputPath>bin\iPhone\Debug</OutputPath>
     <WarningLevel>4</WarningLevel>
     <CodesignKey>iPhone Developer</CodesignKey>
+    <DefineConstants>PLATFORM_IOS XAMARIN_AUTH_INTERNAL</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -38,6 +41,7 @@
     <OutputPath>bin\iPhone\Release</OutputPath>
     <WarningLevel>4</WarningLevel>
     <CodesignKey>iPhone Developer</CodesignKey>
+    <DefineConstants>PLATFORM_IOS XAMARIN_AUTH_INTERNAL</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -56,6 +60,8 @@
     <Folder Include="Table\Query\" />
     <Folder Include="Table\Serialization\" />
     <Folder Include="Properties\" />
+    <Folder Include="Xamarin.Auth\" />
+    <Folder Include="Xamarin.Auth\iOS\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.WinMD\ServiceFilter\IServiceFilterResponse.cs">
@@ -196,5 +202,66 @@
     <Compile Include="..\..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Query\TotalCountList.cs">
       <Link>Table\Query\TotalCountList.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.WinMD\Core\MobileServiceAuthenticationProvider.cs">
+      <Link>Core\MobileServiceAuthenticationProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\android\src\Microsoft.Azure.Zumo.Android\Core\MobileServiceClient.Managed.cs">
+      <Link>Core\MobileServiceClient.Managed.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\libs\Xamarin.Auth\src\Xamarin.Auth\Account.cs">
+      <Link>Xamarin.Auth\Account.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\libs\Xamarin.Auth\src\Xamarin.Auth\AccountStore.cs">
+      <Link>Xamarin.Auth\AccountStore.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\libs\Xamarin.Auth\src\Xamarin.Auth\Authenticator.cs">
+      <Link>Xamarin.Auth\Authenticator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\libs\Xamarin.Auth\src\Xamarin.Auth\AuthException.cs">
+      <Link>Xamarin.Auth\AuthException.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\libs\Xamarin.Auth\src\Xamarin.Auth\ExceptionEx.cs">
+      <Link>Xamarin.Auth\ExceptionEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\libs\Xamarin.Auth\src\Xamarin.Auth\FormAuthenticator.cs">
+      <Link>Xamarin.Auth\FormAuthenticator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\libs\Xamarin.Auth\src\Xamarin.Auth\OAuth1.cs">
+      <Link>Xamarin.Auth\OAuth1.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\libs\Xamarin.Auth\src\Xamarin.Auth\OAuth1Authenticator.cs">
+      <Link>Xamarin.Auth\OAuth1Authenticator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\libs\Xamarin.Auth\src\Xamarin.Auth\OAuth2Authenticator.cs">
+      <Link>Xamarin.Auth\OAuth2Authenticator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\libs\Xamarin.Auth\src\Xamarin.Auth\WebAuthenticator.cs">
+      <Link>Xamarin.Auth\WebAuthenticator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\libs\Xamarin.Auth\src\Xamarin.Auth\WebEx.cs">
+      <Link>Xamarin.Auth\WebEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\libs\Xamarin.Auth\src\Xamarin.Auth\WebRedirectAuthenticator.cs">
+      <Link>Xamarin.Auth\WebRedirectAuthenticator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\libs\Xamarin.Auth\src\Xamarin.Auth.iOS\ACAccountWrapper.cs">
+      <Link>Xamarin.Auth\iOS\ACAccountWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\libs\Xamarin.Auth\src\Xamarin.Auth.iOS\FormAuthenticatorController.cs">
+      <Link>Xamarin.Auth\iOS\FormAuthenticatorController.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\libs\Xamarin.Auth\src\Xamarin.Auth.iOS\KeyChainAccountStore.cs">
+      <Link>Xamarin.Auth\iOS\KeyChainAccountStore.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\libs\Xamarin.Auth\src\Xamarin.Auth.iOS\ProgressLabel.cs">
+      <Link>Xamarin.Auth\iOS\ProgressLabel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\libs\Xamarin.Auth\src\Xamarin.Auth.iOS\UIViewControllerEx.cs">
+      <Link>Xamarin.Auth\iOS\UIViewControllerEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\libs\Xamarin.Auth\src\Xamarin.Auth.iOS\WebAuthenticatorController.cs">
+      <Link>Xamarin.Auth\iOS\WebAuthenticatorController.cs</Link>
+    </Compile>
+    <Compile Include="Core\MobileServiceClient.iOS.cs" />
   </ItemGroup>
 </Project>
