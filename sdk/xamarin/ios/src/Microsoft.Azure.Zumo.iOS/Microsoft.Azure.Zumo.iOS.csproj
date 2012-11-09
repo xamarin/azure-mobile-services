@@ -17,7 +17,7 @@
     <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
     <WarningLevel>4</WarningLevel>
     <MtouchLink>None</MtouchLink>
-    <DefineConstants>PLATFORM_IOS XAMARIN_AUTH_INTERNAL</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;XAMARIN_AUTH_INTERNAL;PLATFORM_IOS</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -25,7 +25,7 @@
     <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
     <WarningLevel>4</WarningLevel>
     <MtouchLink>None</MtouchLink>
-    <DefineConstants>PLATFORM_IOS XAMARIN_AUTH_INTERNAL</DefineConstants>
+    <DefineConstants>TRACE;PLATFORM_IOS;XAMARIN_AUTH_INTERNAL</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugType>none</DebugType>
