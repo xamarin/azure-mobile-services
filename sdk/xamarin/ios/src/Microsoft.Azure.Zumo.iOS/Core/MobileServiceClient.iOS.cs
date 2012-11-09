@@ -49,6 +49,9 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// <summary>
         /// Log a user into a Mobile Services application given a provider name.
         /// </summary>
+        /// <param name="RectangleF" type="System.Drawing.RectangleF">
+        /// The area in <paramref name="view"/> to anchor to.
+        /// </para>
         /// <param name="UIView" type="MonoTouch.UIKit.UIView">
         /// UIView used to display a popover from on iPad.
         /// </param>
@@ -67,6 +70,9 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// <summary>
         /// Log a user into a Mobile Services application given a provider name.
         /// </summary>
+        /// <param name="RectangleF" type="System.Drawing.RectangleF">
+        /// The area in <paramref name="view"/> to anchor to.
+        /// </para>
         /// <param name="UIView" type="MonoTouch.UIKit.UIView">
         /// UIView used to display a popover from on iPad.
         /// </param>
@@ -85,8 +91,8 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// <summary>
         /// Log a user into a Mobile Services application given a provider name.
         /// </summary>
-        /// <param name="UIView" type="MonoTouch.UIKit.UIView">
-        /// UIView used to display a popover from on iPad.
+        /// <param name="UIBarButtonItem" type="MonoTouch.UIKit.UIBarButtonItem">
+        /// UIBarButtonItem used to display a popover from on iPad.
         /// </param>
         /// <param name="provider" type="MobileServiceAuthenticationProvider">
         /// Authentication provider to use.
@@ -103,8 +109,8 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// <summary>
         /// Log a user into a Mobile Services application given a provider name.
         /// </summary>
-        /// <param name="UIView" type="MonoTouch.UIKit.UIView">
-        /// UIView used to display a popover from on iPad.
+        /// <param name="UIBarButtonItem" type="MonoTouch.UIKit.UIBarButtonItem">
+        /// UIBarButtonItem used to display a popover from on iPad.
         /// </param>
         /// <param name="provider" type="MobileServiceAuthenticationProvider">
         /// Authentication provider to use.
