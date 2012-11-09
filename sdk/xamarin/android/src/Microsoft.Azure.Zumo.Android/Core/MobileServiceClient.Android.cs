@@ -79,14 +79,25 @@ namespace Microsoft.WindowsAzure.MobileServices
 
             this.LoginInProgress = true;
 
-		    Task<MobileServiceUser> task = null;
+            TaskCompletionSource<MobileServiceUser> tcs = new TaskCompletionSource<MobileServiceUser> ();
 
             if (token != null)
             {
                 // Invoke the POST endpoint to exchange provider-specific token for a Windows Azure Mobile Services token
 
-                task = this.RequestAsync("POST", LoginAsyncUriFragment + "/" + providerName, token)
-                    .ContinueWith<MobileServiceUser> (ContinueRequest);
+                this.RequestAsync("POST", LoginAsyncUriFragment + "/" + providerName, token)
+                    .ContinueWith (t =>
+                    {
+                        if (t.IsCanceled)
+                            tcs.SetCanceled();
+                        else if (t.IsFaulted)
+                            tcs.SetException (t.Exception.InnerExceptions);
+                        else
+                        {
+                            SetupCurrentUser (t.Result);
+                            tcs.SetResult (this.CurrentUser);
+                        }
+                    });
             }
             else
             {
@@ -95,42 +106,37 @@ namespace Microsoft.WindowsAzure.MobileServices
                 Uri startUri = new Uri(this.ApplicationUri, LoginAsyncUriFragment + "/" + providerName);
                 Uri endUri = new Uri(this.ApplicationUri, LoginAsyncDoneUriFragment);
 
-                TaskCompletionSource<IJsonValue> tcs = new TaskCompletionSource<IJsonValue>();
-
                 WebRedirectAuthenticator auth = new WebRedirectAuthenticator (startUri, endUri);
                 auth.Error += (o, e) =>
                 {
                     Exception ex = e.Exception ?? new Exception (e.Message);
                     tcs.TrySetException (ex);
                 };
-
+                
                 auth.Completed += (o, e) =>
                 {
-                    tcs.SetResult (JsonValue.Parse (e.Account.Properties["token"]));
+                    if (!e.IsAuthenticated)
+                        tcs.TrySetCanceled();
+                    else
+                    {
+                        SetupCurrentUser (JsonValue.Parse (e.Account.Properties["token"]));
+                        tcs.TrySetResult (this.CurrentUser);
+                    }
                 };
-
-                task = tcs.Task.ContinueWith<MobileServiceUser> (ContinueRequest);
 
                 Intent intent = auth.GetUI (context);
                 context.StartActivity (intent);
             }
 
-		    return task;
+            return tcs.Task;
         }
 
-        private MobileServiceUser ContinueRequest (Task<IJsonValue> task)
+        private void SetupCurrentUser (IJsonValue value)
         {
-            this.LoginInProgress = false;
-
-            if (!task.IsFaulted)
-            {
-                IJsonValue response = task.Result;
-                // Get the Mobile Services auth token and user data
-                this.currentUserAuthenticationToken = response.Get (LoginAsyncAuthenticationTokenKey).AsString();
-                this.CurrentUser = new MobileServiceUser (response.Get ("user").Get ("userId").AsString());
-            }
-
-            return this.CurrentUser;
+            IJsonValue response = value;
+            // Get the Mobile Services auth token and user data
+            this.currentUserAuthenticationToken = response.Get (LoginAsyncAuthenticationTokenKey).AsString();
+            this.CurrentUser = new MobileServiceUser (response.Get ("user").Get ("userId").AsString());
         }
-	}
+    }
 }
