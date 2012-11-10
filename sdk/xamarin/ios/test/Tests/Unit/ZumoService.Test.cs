@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Zumo.Win8.CSharp.Test
                 var current = t.Result;
                 Assert.IsNotNull(current);
                 Assert.AreEqual("123456", current.UserId);
-                Assert.That (hijack.Request.Uri.ToString(), Is.StringEnding ("login?mode=authenticationToken"));
+                Assert.That (hijack.Request.Uri.ToString(), Is.StringEnding ("login"));
                 string input = JsonValue.Parse(hijack.Request.Content).Get("authenticationToken").AsString();
                 Assert.AreEqual("donkey", input);
                 Assert.AreEqual("POST", hijack.Request.Method);
@@ -228,7 +228,7 @@ namespace Microsoft.Azure.Zumo.Win8.CSharp.Test
             catch (AggregateException aex)
             {
                 var ex = aex.AssertCaught<MobileServiceInvalidOperationException>();
-                Assert.That (ex.Message, Is.StringStarting ("error message"));
+                Assert.That (ex.Message, Is.EqualTo ("error message"));
                 Assert.AreEqual((int)HttpStatusCode.Unauthorized, ex.Response.StatusCode);
                 Assert.That (ex.Response.Content, Contains.Substring ("donkey"));
                 Assert.That (ex.Request.Uri.ToString(), Is.StringStarting (appUrl));
