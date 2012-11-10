@@ -195,6 +195,7 @@
     <Compile Include="Windows.Data.Json\IJsonValue.cs" />
     <Compile Include="Windows.Data.Json\JsonObject.cs" />
     <Compile Include="Windows.Data.Json\JsonValueType.cs" />
+    <Compile Include="Core\MobileServiceApplication.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

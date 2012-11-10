@@ -142,7 +142,6 @@
     <Compile Include="..\..\..\android\src\Microsoft.Azure.Zumo.Android\Core\MobileServiceTable.Generic.cs">
       <Link>Core\MobileServiceTable.Generic.cs</Link>
     </Compile>
-    <Compile Include="Core\MobileServiceClient.cs" />
     <Compile Include="..\..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Table\Query\FilterBuildingExpressionVisitor.cs">
       <Link>Table\Query\FilterBuildingExpressionVisitor.cs</Link>
     </Compile>
@@ -263,5 +262,9 @@
       <Link>Xamarin.Auth\iOS\WebAuthenticatorController.cs</Link>
     </Compile>
     <Compile Include="Core\MobileServiceClient.iOS.cs" />
+    <Compile Include="Core\MobileServiceApplication.cs" />
+    <Compile Include="..\..\..\android\src\Microsoft.Azure.Zumo.Android\Core\MobileServiceClient.cs">
+      <Link>Core\MobileServiceClient.cs</Link>
+    </Compile>
   </ItemGroup>
 </Project>
