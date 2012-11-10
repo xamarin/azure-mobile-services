@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Zumo.Win8.CSharp.Test
             catch (AggregateException aex)
             {
                 var ex = aex.AssertCaught<InvalidOperationException>();
-                Assert.That (ex.Message, Contains.Substring ("error message"));
+                Assert.That (ex.Message, Is.EqualTo ("error message"));
             }
 
             // Verify all of the exception parameters
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.Zumo.Win8.CSharp.Test
             catch (AggregateException aex)
             {
                 var ex = aex.AssertCaught<InvalidOperationException>();
-                Assert.That (ex.Message, Is.StringStarting ("YOU SHALL NOT PASS."));
+                Assert.AreEqual ("The request could not be completed.  (YOU SHALL NOT PASS.)", ex.Message);
             }
         }
 
