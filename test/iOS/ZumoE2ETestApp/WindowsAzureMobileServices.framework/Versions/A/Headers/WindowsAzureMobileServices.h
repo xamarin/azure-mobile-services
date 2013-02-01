@@ -14,25 +14,15 @@
 // limitations under the License.
 //
 
+#ifndef WindowsAzureMobileServices_WindowsAzureMobileServices_h
+#define WindowsAzureMobileServices_WindowsAzureMobileServices_h
 
-#import <UIKit/UIKit.h>
+#import "MSClient.h"
+#import "MSTable.h"
+#import "MSQuery.h"
+#import "MSUser.h"
+#import "MSFilter.h"
 #import "MSError.h"
+#import "MSLoginController.h"
 
-
-#pragma mark * Block Type Definitions
-
-
-// Callback for navigation to the end URL of the MSLoginViewController
-typedef void (^MSEndUrlNavigatedTo)(NSURL *url, NSError *error);
-
-
-#pragma  mark * MSLoginViewController Public Interface
-
-
-@interface MSLoginViewController : UIViewController<UIWebViewDelegate>
-
-- (id) initWithStartUrl:(NSURL *)startUrl
-                 endUrl:(NSURL *)endUrl
-                 completion:(MSEndUrlNavigatedTo)completion;
-
-@end
+#endif
