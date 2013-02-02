@@ -74,7 +74,7 @@ namespace Microsoft.WindowsAzure.MobileServices
             // Send the query
             string odata = query.ToString();
 
-            return table.ReadAsync (odata).ContinueWith (t =>
+            return table.ReadAsync (odata, query.Parameters).ContinueWith (t =>
             {
                 // Parse the results
                 long totalCount;
@@ -99,7 +99,7 @@ namespace Microsoft.WindowsAzure.MobileServices
 
                         return (U)obj;
                     }));
-	        });
+            });
         }
 
         /// <summary>
@@ -177,11 +177,25 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// <returns>The desired element.</returns>
         public Task<T> LookupAsync(object id)
         {
+            return LookupAsync(id, null);
+        }
+
+        /// <summary>
+        /// Get an element from a table by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the element.</param>
+        /// <param name="parameters">
+        /// A dictionary of user-defined parameters and values to include in the request URI query string.
+        /// </param>
+        /// <returns>The desired element.</returns>
+        public new Task<T> LookupAsync(object id, IDictionary<string, string> parameters)
+        {
             // TODO: At some point in the future this will be involved in our
             // caching story and relationships across tables via foreign
             // keys.
 
-	        return SendLookupAsync (id).ContinueWith (t => MobileServiceTableSerializer.Deserialize<T> (t.Result.AsObject()));
+            return SendLookupAsync (id, parameters)
+                .ContinueWith (t => MobileServiceTableSerializer.Deserialize<T> (t.Result.AsObject()));
         }
 
         /// <summary>
@@ -194,6 +208,20 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// </returns>
         public Task RefreshAsync(T instance)
         {
+            return RefreshAsync(instance, null);
+        }
+
+        /// <summary>
+        /// Refresh the current instance with the latest values from the
+        /// table.
+        /// </summary>
+        /// <param name="instance">The instance to refresh.</param>
+        /// <param name="parameters">A dictionary of user-defined parameters and values to include in the request URI query string.</param>
+        /// <returns>
+        /// A task that will complete when the refresh has finished.
+        /// </returns>
+        public Task RefreshAsync(T instance, IDictionary<string, string> parameters)
+        {
             if (instance == null)
             {
                 throw new ArgumentNullException("instance");
@@ -203,62 +231,63 @@ namespace Microsoft.WindowsAzure.MobileServices
             SerializableType type = SerializableType.Get(typeof(T));
             object id = type.IdMember.GetValue(instance);
 
-			TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
+            TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
 
             if (!SerializableType.IsDefaultIdValue(id))
             {
-				// Get the latest version of this element
-	            GetSingleValueAsync (id).ContinueWith (t =>
-	            {
-		            // Deserialize that value back into the current instance
-		            MobileServiceTableSerializer.Deserialize (t.Result, instance);
-		            tcs.SetResult (true);
-	            });
+                // Get the latest version of this element
+                GetSingleValueAsync (id, parameters).ContinueWith (t =>
+                {
+                    // Deserialize that value back into the current instance
+                    MobileServiceTableSerializer.Deserialize (t.Result, instance);
+                    tcs.SetResult (true);
+                });
             }
-			else
-	            tcs.SetResult (true);
+            else
+                tcs.SetResult (true);
 
-	        return tcs.Task;
+            return tcs.Task;
         }
 
         /// <summary>
         /// Get an element from a table by its ID.
         /// </summary>
         /// <param name="id">The ID of the element.</param>
+        /// <param name="parameters">A dictionary of user-defined parameters and values to include in the request URI query string.</param>
         /// <returns>The desired element as JSON object.</returns>
-        private Task<JsonObject> GetSingleValueAsync(object id)
+        private Task<JsonObject> GetSingleValueAsync(object id, IDictionary<string, string> parameters)
         {
             // Create a query for just this item
             string query = string.Format(
                 CultureInfo.InvariantCulture,
                 "$filter={0} eq {1}",
-                IdPropertyName,
+                MobileServiceTableUrlBuilder.IdPropertyName,
                 TypeExtensions.ToODataConstant(id));
 
-	        return ReadAsync (query).ContinueWith (t =>
-	        {
-				// Get the first element in the response
-				JsonObject obj = t.Result.AsObject();
-				if (obj == null)
-				{
-					JsonArray array = t.Result.AsArray();
-					if (array != null && array.Count > 0)
-					{
-						obj = array.FirstOrDefault().AsObject();
-					}
-				}
+            return ReadAsync (query, parameters).ContinueWith (t =>
+            {
+                // Get the first element in the response
+                JsonObject obj = t.Result.AsObject();
+                if (obj == null)
+                {
+                    JsonArray array = t.Result.AsArray();
+                    if (array != null && array.Count > 0)
+                    {
+                        obj = array.FirstOrDefault().AsObject();
+                    }
+                }
 
-				if (obj == null)
-				{
-					throw new InvalidOperationException(
-						string.Format(
-							CultureInfo.InvariantCulture,
-							Resources.MobileServiceTables_GetSingleValueAsync_NotSingleObject,
-							(t.Result ?? JsonExtensions.Null()).Stringify()));
-				}
+                if (obj == null)
+                {
+                    throw new InvalidOperationException(
+                        string.Format(
+                            CultureInfo.InvariantCulture,
+                            Resources.MobileServiceTables_GetSingleValueAsync_NotSingleObject,
+                            (t.Result ?? JsonExtensions.Null()).Stringify()));
+                }
 
-				return obj;
-	        });
+                return obj;
+            });
         }
 
         /// <summary>
@@ -270,6 +299,19 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// </returns>
         public Task InsertAsync(T instance)
         {
+            return InsertAsync(instance, null);
+        }
+
+        /// <summary>
+        /// Insert a new instance into the table.
+        /// </summary>
+        /// <param name="instance">The instance to insert.</param>
+        /// <param name="parameters">A dictionary of user-defined parameters and values to include in the request URI query string.</param>
+        /// <returns>
+        /// A task that will complete when the insertion has finished.
+        /// </returns>
+        public Task InsertAsync(T instance, IDictionary<string, string> parameters)
+        {
             if (instance == null)
             {
                 throw new ArgumentNullException("instance");
@@ -278,8 +320,8 @@ namespace Microsoft.WindowsAzure.MobileServices
             // Serialize the instance
             JsonObject value = MobileServiceTableSerializer.Serialize(instance).AsObject();
 
-	        return InsertAsync (value)
-				.ContinueWith (t => MobileServiceTableSerializer.Deserialize (t.Result, instance));
+            return InsertAsync (value, parameters)
+                .ContinueWith (t => MobileServiceTableSerializer.Deserialize (t.Result, instance));
         }
 
         /// <summary>
@@ -291,6 +333,19 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// </returns>
         public Task UpdateAsync(T instance)
         {
+            return UpdateAsync(instance, null);
+        }
+
+        /// <summary>
+        /// Updates an instance in the table.
+        /// </summary>
+        /// <param name="instance">The instance to update.</param>
+        /// <param name="parameters">A dictionary of user-defined parameters and values to include in the request URI query string.</param>
+        /// <returns>
+        /// A task that will complete when the update has finished.
+        /// </returns>
+        public Task UpdateAsync(T instance, IDictionary<string, string> parameters)
+        {
             if (instance == null)
             {
                 throw new ArgumentNullException("instance");
@@ -300,8 +355,8 @@ namespace Microsoft.WindowsAzure.MobileServices
             JsonObject value = MobileServiceTableSerializer.Serialize(instance).AsObject();
 
             // Send the request
-	        return UpdateAsync (value)
-				.ContinueWith (t => MobileServiceTableSerializer.Deserialize (t.Result, instance));
+            return UpdateAsync (value, parameters)
+                .ContinueWith (t => MobileServiceTableSerializer.Deserialize (t.Result, instance));
         }
 
         /// <summary>
@@ -313,6 +368,19 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// </returns>
         public Task DeleteAsync(T instance)
         {
+            return DeleteAsync(instance, null);
+        }
+
+        /// <summary>
+        /// Delete an instance from the table.
+        /// </summary>
+        /// <param name="instance">The instance to delete.</param>
+        /// <param name="parameters">A dictionary of user-defined parameters and values to include in the request URI query string.</param>
+        /// <returns>
+        /// A task that will complete when the delete has finished.
+        /// </returns>
+        public Task DeleteAsync(T instance, IDictionary<string, string> parameters)
+        {
             if (instance == null)
             {
                 throw new ArgumentNullException("instance");
@@ -321,17 +389,17 @@ namespace Microsoft.WindowsAzure.MobileServices
             // Serialize the instance
             JsonObject value = MobileServiceTableSerializer.Serialize(instance).AsObject();
 
-			 // Send the request
-	        return DeleteAsync (value)
-				.ContinueWith (t =>
-				{
-					// Clear the instance ID since it's no longer associated with that
-					// ID on the server (note that reflection is goodly enough to turn
-					// null into the correct value for us).
-					SerializableType type = SerializableType.Get (typeof (T));
-					type.IdMember.SetValue (instance, null);
-				});
-		}
+             // Send the request
+            return DeleteAsync (value, parameters)
+                .ContinueWith (t =>
+                {
+                    // Clear the instance ID since it's no longer associated with that
+                    // ID on the server (note that reflection is goodly enough to turn
+                    // null into the correct value for us).
+                    SerializableType type = SerializableType.Get (typeof (T));
+                    type.IdMember.SetValue (instance, null);
+                });
+        }
 
         /// <summary>
         /// Creates a query by applying the specified filter predicate.
@@ -472,7 +540,7 @@ namespace Microsoft.WindowsAzure.MobileServices
         [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Not nested when used via async pattern.")]
         public Task<List<T>> ToListAsync()
         {
-	        return ReadAsync().ContinueWith (t => (List<T>)new TotalCountList<T> (t.Result));
+            return ReadAsync().ContinueWith (t => (List<T>)new TotalCountList<T> (t.Result));
         }
     }
 }

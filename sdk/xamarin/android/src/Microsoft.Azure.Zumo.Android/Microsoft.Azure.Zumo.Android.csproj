@@ -51,6 +51,9 @@
     <Compile Include="..\..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Core\MobileServiceTable.Managed.cs">
       <Link>Core\MobileServiceTable.Managed.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Core\MobileServiceTableUrlBuilder.cs">
+      <Link>Core\MobileServiceTableUrlBuilder.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.Managed\Resources.cs">
       <Link>Resources.cs</Link>
     </Compile>

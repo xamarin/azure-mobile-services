@@ -225,9 +225,10 @@ namespace Microsoft.WindowsAzure.MobileServices
         private void SetupCurrentUser (IJsonValue value)
         {
             IJsonValue response = value;
-            // Get the Mobile Services auth token and user data
-            this.currentUserAuthenticationToken = response.Get (LoginAsyncAuthenticationTokenKey).AsString();
+
             this.CurrentUser = new MobileServiceUser (response.Get ("user").Get ("userId").AsString());
+            // Get the Mobile Services auth token and user data
+            this.CurrentUser.MobileServiceAuthenticationToken = response.Get (LoginAsyncAuthenticationTokenKey).AsString();
         }
     }
 }

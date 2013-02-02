@@ -64,6 +64,9 @@
     <Folder Include="Xamarin.Auth\iOS\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.WinMD\Core\MobileServiceTableUrlBuilder.cs">
+      <Link>Core\MobileServiceTableUrlBuilder.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\..\windows\src\Microsoft.Azure.Zumo.Windows.WinMD\ServiceFilter\IServiceFilterResponse.cs">
       <Link>ServiceFilter\IServiceFilterResponse.cs</Link>
     </Compile>

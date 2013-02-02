@@ -19,21 +19,6 @@ namespace Microsoft.WindowsAzure.MobileServices
     internal partial class MobileServiceTable : IMobileServiceTable
     {
         /// <summary>
-        /// Name of the reserved Mobile Services ID member.
-        /// </summary>
-        /// <remarks>
-        /// Note: This value is used by other areas like serialiation to find
-        /// the name of the reserved ID member.
-        /// </remarks>
-        internal const string IdPropertyName = "id";
-
-        /// <summary>
-        /// The route separator used to denote the table in a uri like
-        /// .../{app}/tables/{coll}.
-        /// </summary>
-        internal const string TableRouteSeperatorName = "tables";
-
-        /// <summary>
         /// Initializes a new instance of the MobileServiceTables class.
         /// </summary>
         /// <param name="tableName">The name of the table.</param>
@@ -60,80 +45,38 @@ namespace Microsoft.WindowsAzure.MobileServices
         public string TableName { get; private set; }
 
         /// <summary>
-        /// Get a uri fragment representing the resource corresponding to the
-        /// table.
-        /// </summary>
-        /// <param name="tableName">The name of the table.</param>
-        /// <returns>A URI fragment representing the resource.</returns>
-        private static string GetUriFragment(string tableName)
-        {
-            Debug.Assert(!string.IsNullOrEmpty(tableName),
-                "tableName should not be null or empty!");
-            return Path.Combine(TableRouteSeperatorName, tableName);
-        }
-
-        /// <summary>
-        /// Get a uri fragment representing the resource corresponding to the
-        /// given instance in the table.
-        /// </summary>
-        /// <param name="tableName">The name of the table.</param>
-        /// <param name="instance">The instance.</param>
-        /// <returns>A URI fragment representing the resource.</returns>
-        private static string GetUriFragment(string tableName, JsonObject instance)
-        {
-            Debug.Assert(!string.IsNullOrEmpty(tableName),
-                "tableName should not be null or empty!");
-
-            // Get the value of the object (as a primitive JSON type)
-            object id = null;
-            if (!instance.Get(IdPropertyName).TryConvert(out id) || id == null)
-            {
-                throw new ArgumentException(
-                    string.Format(
-                        CultureInfo.InvariantCulture,
-                        Resources.IdNotFoundExceptionMessage,
-                        IdPropertyName),
-                    "instance");
-            }
-
-            return GetUriFragment(tableName, id);
-        }
-
-        /// <summary>
-        /// Get a uri fragment representing the resource corresponding to the
-        /// given id in the table.
-        /// </summary>
-        /// <param name="tableName">The name of the table.</param>
-        /// <param name="id">The id of the instance.</param>
-        /// <returns>A URI fragment representing the resource.</returns>
-        private static string GetUriFragment(string tableName, object id)
-        {
-            Debug.Assert(!string.IsNullOrEmpty(tableName),
-                "tableName should not be null or empty!");
-            Debug.Assert(id != null, "id should not be null!");
-
-            string uriFragment = GetUriFragment(tableName);
-            return Path.Combine(uriFragment, TypeExtensions.ToUriConstant(id));
-        }
-
-        /// <summary>
         /// Execute a query against a table.
         /// </summary>
-        /// <param name="query">
+        /// <param name="queryString">
         /// An object defining the query to execute.
+        /// </param>
+        /// <param name="parameters">
+        /// A dictionary of user-defined parameters and values to include in the request URI query string.
         /// </param>
         /// <returns>
         /// A task that will return with results when the query finishes.
         /// </returns>
-        internal Task<IJsonValue> SendReadAsync(string query)
+        internal Task<IJsonValue> SendReadAsync(string queryString, IDictionary<string, string> parameters)
         {
-            string uriFragment = GetUriFragment(this.TableName);
-            if (!string.IsNullOrEmpty(query))
+            string uriFragment = MobileServiceTableUrlBuilder.GetUriFragment(this.TableName);
+            string parametersString = MobileServiceTableUrlBuilder.GetQueryString(parameters);
+
+            // Concatenate the query and the user-defined query string paramters
+            if (!string.IsNullOrEmpty(parametersString))
             {
-                uriFragment += '?' + query.TrimStart('?');
+                if (!string.IsNullOrEmpty(queryString))
+                {
+                    queryString += '&' + parametersString;
+                }
+                else
+                {
+                    queryString = parametersString;
+                }
             }
 
-            return this.MobileServiceClient.RequestAsync("GET", uriFragment, null);
+            string uriString = MobileServiceTableUrlBuilder.CombinePathAndQuery(uriFragment, queryString);
+
+            return this.MobileServiceClient.RequestAsync("GET", uriString, null);
         }
 
         /// <summary>
@@ -142,18 +85,25 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// <param name="id">
         /// The id of the object to lookup.
         /// </param>
+        /// <param name="parameters">
+        /// A dictionary of user-defined parameters and values to include in the request URI query string.
+        /// </param>
         /// <returns>
         /// A task that will return with results when the query finishes.
         /// </returns>
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Called via the strongly typed MobileServiceTable in the C# library only.")]
-        internal Task<IJsonValue> SendLookupAsync(object id)
+        internal Task<IJsonValue> SendLookupAsync(object id, IDictionary<string, string> parameters)
         {
             if (id == null)
             {
                 throw new ArgumentNullException("id");
             }
-            string uriFragment = GetUriFragment(this.TableName, id);
-            return this.MobileServiceClient.RequestAsync("GET", uriFragment, null);
+
+            string uriFragment = MobileServiceTableUrlBuilder.GetUriFragment(this.TableName, id);
+            string queryString = MobileServiceTableUrlBuilder.GetQueryString(parameters);
+            string uriString = MobileServiceTableUrlBuilder.CombinePathAndQuery(uriFragment, queryString);
+
+            return this.MobileServiceClient.RequestAsync("GET", uriString, null);
         }
 
         /// <summary>
@@ -162,10 +112,13 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// <param name="instance">
         /// The instance to insert into the table.
         /// </param>
+        /// <param name="parameters">
+        /// A dictionary of user-defined parameters and values to include in the request URI query string.
+        /// </param>
         /// <returns>
         /// A task that will complete when the insert finishes.
         /// </returns>
-        internal Task<IJsonValue> SendInsertAsync(JsonObject instance)
+        internal Task<IJsonValue> SendInsertAsync(JsonObject instance, IDictionary<string, string> parameters)
         {
             if (instance == null)
             {
@@ -173,20 +126,22 @@ namespace Microsoft.WindowsAzure.MobileServices
             }
 
             // Make sure the instance doesn't have its ID set for an insertion
-            if (instance.Get(IdPropertyName) != null)
+            if (instance.Get(MobileServiceTableUrlBuilder.IdPropertyName) != null)
             {
                 throw new ArgumentException(
                     string.Format(
                         CultureInfo.InvariantCulture,
                         Resources.CannotInsertWithExistingIdMessage,
-                        IdPropertyName),
+                        MobileServiceTableUrlBuilder.IdPropertyName),
                     "instance");
             }
 
-            string url = GetUriFragment(this.TableName);
+            string uriFragment = MobileServiceTableUrlBuilder.GetUriFragment(this.TableName);
+            string queryString = MobileServiceTableUrlBuilder.GetQueryString(parameters);
+            string uriString = MobileServiceTableUrlBuilder.CombinePathAndQuery(uriFragment, queryString);
 
-	        return this.MobileServiceClient.RequestAsync ("POST", url, instance)
-		        .ContinueWith (t => Patch (instance, t.Result));
+            return this.MobileServiceClient.RequestAsync ("POST", uriString, instance)
+                .ContinueWith (t => Patch (instance, t.Result));
         }
 
         /// <summary>
@@ -195,19 +150,24 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// <param name="instance">
         /// The instance to update in the table.
         /// </param>
+        /// <param name="parameters">
+        /// A dictionary of user-defined parameters and values to include in the request URI query string.
+        /// </param>
         /// <returns>
         /// A task that will complete when the update finishes.
         /// </returns>
-        internal Task<IJsonValue> SendUpdateAsync(JsonObject instance)
+        internal Task<IJsonValue> SendUpdateAsync(JsonObject instance, IDictionary<string, string> parameters)
         {
             if (instance == null)
             {
                 throw new ArgumentNullException("instance");
             }
-            string url = GetUriFragment(this.TableName, instance);
+            string uriFragment = MobileServiceTableUrlBuilder.GetUriFragment(this.TableName, instance);
+            string queryString = MobileServiceTableUrlBuilder.GetQueryString(parameters);
+            string uriString = MobileServiceTableUrlBuilder.CombinePathAndQuery(uriFragment, queryString);
 
-	        return this.MobileServiceClient.RequestAsync ("PATCH", url, instance)
-		        .ContinueWith (t => Patch (instance, t.Result));
+            return this.MobileServiceClient.RequestAsync ("PATCH", uriString, instance)
+                .ContinueWith (t => Patch (instance, t.Result));
         }
 
         /// <summary>
@@ -216,17 +176,24 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// <param name="instance">
         /// The instance to delete from the table.
         /// </param>
+        /// <param name="parameters">
+        /// A dictionary of user-defined parameters and values to include in the request URI query string.
+        /// </param>
         /// <returns>
         /// A task that will complete when the delete finishes.
         /// </returns>
-        internal Task SendDeleteAsync(JsonObject instance)
+        internal Task SendDeleteAsync(JsonObject instance, IDictionary<string, string> parameters)
         {
             if (instance == null)
             {
                 throw new ArgumentNullException("instance");
             }
-            string url = GetUriFragment(this.TableName, instance);
-            return this.MobileServiceClient.RequestAsync("DELETE", url, instance);
+
+            string uriFragment = MobileServiceTableUrlBuilder.GetUriFragment(this.TableName, instance);
+            string queryString = MobileServiceTableUrlBuilder.GetQueryString(parameters);
+            string uriString = MobileServiceTableUrlBuilder.CombinePathAndQuery(uriFragment, queryString);
+
+            return this.MobileServiceClient.RequestAsync("DELETE", uriString, instance);
         }
 
         /// <summary>

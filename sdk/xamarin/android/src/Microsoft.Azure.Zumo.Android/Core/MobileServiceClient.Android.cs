@@ -7,33 +7,33 @@ using Xamarin.Auth;
 
 namespace Microsoft.WindowsAzure.MobileServices
 {
-	public sealed partial class MobileServiceClient
-	{
-	    /// <summary>
-	    /// Log a user into a Mobile Services application given a provider name.
-	    /// </summary>
-	    /// <param name="context" type="Android.Content.Context">
-	    /// Context used to launch login UI.
-	    /// </param>
-	    /// <param name="provider" type="MobileServiceAuthenticationProvider">
-	    /// Authentication provider to use.
-	    /// </param>
-	    /// <returns>
-	    /// Task that will complete when the user has finished authentication.
-	    /// </returns>
-	    [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login", Justification = "Login is more appropriate than LogOn for our usage.")]
+    public sealed partial class MobileServiceClient
+    {
+        /// <summary>
+        /// Log a user into a Mobile Services application given a provider name.
+        /// </summary>
+        /// <param name="context" type="Android.Content.Context">
+        /// Context used to launch login UI.
+        /// </param>
+        /// <param name="provider" type="MobileServiceAuthenticationProvider">
+        /// Authentication provider to use.
+        /// </param>
+        /// <returns>
+        /// Task that will complete when the user has finished authentication.
+        /// </returns>
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login", Justification = "Login is more appropriate than LogOn for our usage.")]
         public Task<MobileServiceUser> LoginAsync (Context context, MobileServiceAuthenticationProvider provider)
         {
             return this.SendLoginAsync(context, provider, null);
         }
 
-		 /// <summary>
+         /// <summary>
         /// Log a user into a Mobile Services application given a provider name and optional token object.
         /// </summary>
-	    /// <param name="context" type="Android.Content.Context">
-	    /// Context used to launch login UI.
-	    /// </param>
-		/// <param name="provider" type="MobileServiceAuthenticationProvider">
+        /// <param name="context" type="Android.Content.Context">
+        /// Context used to launch login UI.
+        /// </param>
+        /// <param name="provider" type="MobileServiceAuthenticationProvider">
         /// Authentication provider to use.
         /// </param>
         /// <param name="token" type="JsonObject">
@@ -48,12 +48,12 @@ namespace Microsoft.WindowsAzure.MobileServices
             return this.SendLoginAsync(context, provider, token);
         }
 
-		/// <summary>
+        /// <summary>
         /// Log a user into a Mobile Services application given a provider name and optional token object.
         /// </summary>
-	    /// <param name="context" type="Android.Content.Context">
-	    /// Context used to launch login UI.
-	    /// </param>
+        /// <param name="context" type="Android.Content.Context">
+        /// Context used to launch login UI.
+        /// </param>
         /// <param name="provider" type="MobileServiceAuthenticationProvider">
         /// Authentication provider to use.
         /// </param>
@@ -135,8 +135,8 @@ namespace Microsoft.WindowsAzure.MobileServices
         {
             IJsonValue response = value;
             // Get the Mobile Services auth token and user data
-            this.currentUserAuthenticationToken = response.Get (LoginAsyncAuthenticationTokenKey).AsString();
-            this.CurrentUser = new MobileServiceUser (response.Get ("user").Get ("userId").AsString());
+            CurrentUser = new MobileServiceUser (response.Get ("user").Get ("userId").AsString());
+            CurrentUser.MobileServiceAuthenticationToken = response.Get (LoginAsyncAuthenticationTokenKey).AsString();
         }
     }
 }

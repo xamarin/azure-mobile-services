@@ -96,6 +96,7 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Tests\Unit\MobileServiceTableUrlBuilder.Test.cs" />
     <Compile Include="Tests\Unit\TypeExtensions.Test.cs" />
     <Compile Include="Tests\Unit\JsonExtensions.Test.cs" />
     <Compile Include="Tests\Unit\ZumoQuery.Test.cs" />

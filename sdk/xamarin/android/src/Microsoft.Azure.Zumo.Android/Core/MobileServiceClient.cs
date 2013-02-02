@@ -60,16 +60,6 @@ namespace Microsoft.WindowsAzure.MobileServices
         private static readonly string applicationInstallationId = MobileServiceApplication.InstallationId;
 
         /// <summary>
-        /// A JWT token representing the current user's successful OAUTH
-        /// authorization.
-        /// </summary>
-        /// <remarks>
-        /// This is passed on every request (when it exists) as the X-ZUMO-AUTH
-        /// header.
-        /// </remarks>
-        private string currentUserAuthenticationToken = null;
-
-        /// <summary>
         /// Represents a filter used to process HTTP requests and responses
         /// made by the Mobile Service.  This can only be set by calling
         /// WithFilter to create a new MobileServiceClient with the filter
@@ -131,7 +121,6 @@ namespace Microsoft.WindowsAzure.MobileServices
             this.ApplicationUri = service.ApplicationUri;
             this.ApplicationKey = service.ApplicationKey;
             this.CurrentUser = service.CurrentUser;
-            this.currentUserAuthenticationToken = service.currentUserAuthenticationToken;
             this.filter = service.filter;
         }
 
@@ -151,7 +140,7 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// The current authenticated user provided after a successful call to
         /// MobileServiceClient.Login().
         /// </summary>
-        public MobileServiceUser CurrentUser { get; private set; }
+        public MobileServiceUser CurrentUser { get; set; }
 
         /// <summary>
         /// Gets a reference to a table and its data operations.
@@ -238,15 +227,12 @@ namespace Microsoft.WindowsAzure.MobileServices
             JsonObject request = new JsonObject()
                 .Set(LoginAsyncAuthenticationTokenKey, authenticationToken);
             
-			return this.RequestAsync("POST", LoginAsyncUriFragment, request)
-				.ContinueWith (t =>
-				{
-					// Get the Mobile Services auth token and user data
-					this.currentUserAuthenticationToken = t.Result.Get(LoginAsyncAuthenticationTokenKey).AsString();
-					this.CurrentUser = new MobileServiceUser(t.Result.Get("user").Get("userId").AsString());
-
-					return this.CurrentUser;
-				});
+            return this.RequestAsync("POST", LoginAsyncUriFragment, request)
+                .ContinueWith (t =>
+                {
+                    SetupCurrentUser (t.Result);
+                    return this.CurrentUser;
+                });
         }
 
         /// <summary>
@@ -256,7 +242,6 @@ namespace Microsoft.WindowsAzure.MobileServices
         public void Logout()
         {
             this.CurrentUser = null;
-            this.currentUserAuthenticationToken = null;
         }
 
         /// <summary>
@@ -292,9 +277,9 @@ namespace Microsoft.WindowsAzure.MobileServices
             {
                 request.Headers[RequestApplicationKeyHeader] = this.ApplicationKey;
             }
-            if (!string.IsNullOrEmpty(this.currentUserAuthenticationToken))
+            if (this.CurrentUser != null && !string.IsNullOrEmpty(this.CurrentUser.MobileServiceAuthenticationToken))
             {
-                request.Headers[RequestAuthenticationHeader] = this.currentUserAuthenticationToken;
+                request.Headers[RequestAuthenticationHeader] = this.CurrentUser.MobileServiceAuthenticationToken;
             }
 
             // Add any request as JSON
@@ -304,21 +289,21 @@ namespace Microsoft.WindowsAzure.MobileServices
                 request.Content = content.Stringify();
             }
 
-			// Send the request and get the response back as JSON
-	        return ServiceFilter.ApplyAsync (request, this.filter)
-				.ContinueWith (t =>
-				{
-					var response = t.Result;
-					IJsonValue body = GetResponseJsonAsync (response);
+            // Send the request and get the response back as JSON
+            return ServiceFilter.ApplyAsync (request, this.filter)
+                .ContinueWith (t =>
+                {
+                    var response = t.Result;
+                    IJsonValue body = GetResponseJsonAsync (response);
 
-					// Throw errors for any failing responses
-					if (response.ResponseStatus != ServiceFilterResponseStatus.Success || response.StatusCode >= 400)
-					{
-						ThrowInvalidResponse(request, response, body);
-					}
+                    // Throw errors for any failing responses
+                    if (response.ResponseStatus != ServiceFilterResponseStatus.Success || response.StatusCode >= 400)
+                    {
+                        ThrowInvalidResponse(request, response, body);
+                    }
 
-					return body;
-				});
+                    return body;
+                });
         }
 
         /// <summary>

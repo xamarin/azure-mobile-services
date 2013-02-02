@@ -40,95 +40,95 @@ namespace Microsoft.Azure.Zumo.Win8.CSharp.Test
         public void BasicQuery()
         {
             // Query syntax
-            MobileServiceTableQueryDescription odata = Compile<Product, Product>(table =>
+            MobileServiceTableQueryDescription query = Compile<Product, Product>(table =>
                 from p in table
                 select p);
-            Assert.AreEqual("Product", odata.TableName);
-            Assert.IsNull(odata.Filter);
-            Assert.AreEqual(0, odata.Selection.Count);
-            Assert.AreEqual(0, odata.Ordering.Count);            
+            Assert.AreEqual("Product", query.TableName);
+            Assert.IsNull(query.Filter);
+            Assert.AreEqual(0, query.Selection.Count);
+            Assert.AreEqual(0, query.Ordering.Count);            
         }
 
         [Test]
         public void Ordering()
         {
             // Query syntax
-            MobileServiceTableQueryDescription odata = Compile<Product, Product>(table =>
+            MobileServiceTableQueryDescription query = Compile<Product, Product>(table =>
                 from p in table
                 orderby p.Price ascending
                 select p);
-            Assert.AreEqual(1, odata.Ordering.Count);
-            Assert.AreEqual("Price", odata.Ordering[0].Key);
-            Assert.IsTrue(odata.Ordering[0].Value);
+            Assert.AreEqual(1, query.Ordering.Count);
+            Assert.AreEqual("Price", query.Ordering[0].Key);
+            Assert.IsTrue(query.Ordering[0].Value);
             
             // Chaining
-            odata = Compile<Product, Product>(table => table.OrderBy(p => p.Price));
-            Assert.AreEqual(1, odata.Ordering.Count);
-            Assert.AreEqual("Price", odata.Ordering[0].Key);
-            Assert.IsTrue(odata.Ordering[0].Value);
+            query = Compile<Product, Product>(table => table.OrderBy(p => p.Price));
+            Assert.AreEqual(1, query.Ordering.Count);
+            Assert.AreEqual("Price", query.Ordering[0].Key);
+            Assert.IsTrue(query.Ordering[0].Value);
 
             // Query syntax descending
-            odata = Compile<Product, Product>(table =>
+            query = Compile<Product, Product>(table =>
                 from p in table
                 orderby p.Price descending
                 select p);
-            Assert.AreEqual(1, odata.Ordering.Count);
-            Assert.AreEqual("Price", odata.Ordering[0].Key);
-            Assert.IsFalse(odata.Ordering[0].Value);
+            Assert.AreEqual(1, query.Ordering.Count);
+            Assert.AreEqual("Price", query.Ordering[0].Key);
+            Assert.IsFalse(query.Ordering[0].Value);
 
             // Chaining descending
-            odata = Compile<Product, Product>(table => table.OrderByDescending(p => p.Price));
-            Assert.AreEqual(1, odata.Ordering.Count);
-            Assert.AreEqual("Price", odata.Ordering[0].Key);
-            Assert.IsFalse(odata.Ordering[0].Value);
+            query = Compile<Product, Product>(table => table.OrderByDescending(p => p.Price));
+            Assert.AreEqual(1, query.Ordering.Count);
+            Assert.AreEqual("Price", query.Ordering[0].Key);
+            Assert.IsFalse(query.Ordering[0].Value);
 
             // Query syntax with multiple
-            odata = Compile<Product, Product>(table =>
+            query = Compile<Product, Product>(table =>
                 from p in table
                 orderby p.Price ascending
                 orderby p.Name descending
                 select p);
-            Assert.AreEqual(2, odata.Ordering.Count);
-            Assert.AreEqual("Price", odata.Ordering[0].Key);
-            Assert.IsTrue(odata.Ordering[0].Value);
-            Assert.AreEqual("Name", odata.Ordering[1].Key);
-            Assert.IsFalse(odata.Ordering[1].Value);
+            Assert.AreEqual(2, query.Ordering.Count);
+            Assert.AreEqual("Price", query.Ordering[0].Key);
+            Assert.IsTrue(query.Ordering[0].Value);
+            Assert.AreEqual("Name", query.Ordering[1].Key);
+            Assert.IsFalse(query.Ordering[1].Value);
 
             // Chaining with multiple
-            odata = Compile<Product, Product>(table =>
+            query = Compile<Product, Product>(table =>
                 table
                 .OrderBy(p => p.Price)
                 .OrderByDescending(p => p.Name));
-            Assert.AreEqual(2, odata.Ordering.Count);
-            Assert.AreEqual("Price", odata.Ordering[0].Key);
-            Assert.IsTrue(odata.Ordering[0].Value);
-            Assert.AreEqual("Name", odata.Ordering[1].Key);
-            Assert.IsFalse(odata.Ordering[1].Value);
+            Assert.AreEqual(2, query.Ordering.Count);
+            Assert.AreEqual("Price", query.Ordering[0].Key);
+            Assert.IsTrue(query.Ordering[0].Value);
+            Assert.AreEqual("Name", query.Ordering[1].Key);
+            Assert.IsFalse(query.Ordering[1].Value);
         }
 
         [Test]
         public void Projection()
         {
             // Query syntax
-            MobileServiceTableQueryDescription odata = Compile<Product, string>(table =>
+            MobileServiceTableQueryDescription query = Compile<Product, string>(table =>
                 from p in table
                 select p.Name);
-            Assert.AreEqual(1, odata.Selection.Count);
-            Assert.AreEqual("Name", odata.Selection[0]);
-            Assert.AreEqual(typeof(Product), odata.ProjectionArgumentType);
+            Assert.AreEqual(1, query.Selection.Count);
+            Assert.AreEqual("Name", query.Selection[0]);
+            Assert.AreEqual(typeof(Product), query.ProjectionArgumentType);
             Assert.AreEqual(
                 "ZUMO",
-                odata.Projection.DynamicInvoke(
+                query.Projection.DynamicInvoke(
                     new Product { Name = "ZUMO", Price = 0, InStock = true }));
 
             // Chaining
-            odata = Compile<Product, string>(table => table.Select(p => p.Name));
-            Assert.AreEqual(1, odata.Selection.Count);
-            Assert.AreEqual("Name", odata.Selection[0]);
-            Assert.AreEqual(typeof(Product), odata.ProjectionArgumentType);
+            query = Compile<Product, string>(table => table.Select(p => p.Name));
+            Assert.AreEqual(1, query.Selection.Count);
+            Assert.AreEqual("Name", query.Selection[0]);
+            Assert.AreEqual(typeof(Product), query.ProjectionArgumentType);
             Assert.AreEqual(
                 "ZUMO",
-                odata.Projection.DynamicInvoke(
+                query.Projection.DynamicInvoke(
                     new Product { Name = "ZUMO", Price = 0, InStock = true }));
 
             // Verify that we don't blow up by trying to include the Foo
@@ -142,16 +142,31 @@ namespace Microsoft.Azure.Zumo.Win8.CSharp.Test
         public void SkipTake()
         {
             // Query syntax
-            MobileServiceTableQueryDescription odata = Compile<Product, Product>(table =>
+            MobileServiceTableQueryDescription query = Compile<Product, Product>(table =>
                 (from p in table
                  select p).Skip(2).Take(5));
-            Assert.AreEqual(2, odata.Skip);
-            Assert.AreEqual(5, odata.Top);
+            Assert.AreEqual(2, query.Skip);
+            Assert.AreEqual(5, query.Top);
 
             // Chaining
-            odata = Compile<Product, Product>(table => table.Select(p => p).Skip(2).Take(5));
-            Assert.AreEqual(2, odata.Skip);
-            Assert.AreEqual(5, odata.Top);
+            query = Compile<Product, Product>(table => table.Select(p => p).Skip(2).Take(5));
+            Assert.AreEqual(2, query.Skip);
+            Assert.AreEqual(5, query.Top);
+        }
+
+        [Test]
+        public void WithParameters()
+        {
+            var userParmeters1 = new Dictionary<string, string>() { { "state", "PA" } };
+            var userParmeters2 = new Dictionary<string, string>() { { "country", "USA" } };
+
+            MobileServiceTableQueryDescription query = Compile<Product, Product>(table =>
+                (from p in table
+                 select p).WithParameters(userParmeters1).Skip(2).WithParameters(userParmeters2));
+
+            Assert.AreEqual(2, query.Skip);
+            Assert.AreEqual("PA", query.Parameters["state"]);
+            Assert.AreEqual("USA", query.Parameters["country"]);
         }
 
         [Test]
