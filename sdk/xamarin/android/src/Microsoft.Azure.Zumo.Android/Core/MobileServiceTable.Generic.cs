@@ -175,7 +175,7 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// </summary>
         /// <param name="id">The ID of the element.</param>
         /// <returns>The desired element.</returns>
-        public Task<T> LookupAsync(object id)
+        public new Task<T> LookupAsync(object id)
         {
             return LookupAsync(id, null);
         }
