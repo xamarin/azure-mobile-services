@@ -11,7 +11,7 @@ namespace Sample
 {
 	public partial class SampleViewController : UIViewController
 	{
-		private static readonly MobileServiceClient MobileService = new MobileServiceClient (/* MOBILE SERVICE URL */);
+		private static readonly MobileServiceClient MobileService = new MobileServiceClient ("MOBILE SERVICE URL");
 		private readonly IMobileServiceTable<TodoItem> todoTable = MobileService.GetTable<TodoItem>();
 
 		static bool UserInterfaceIdiomIsPhone {

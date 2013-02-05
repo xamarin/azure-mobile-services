@@ -13,7 +13,7 @@ namespace Sample
 	[Activity (Label = "Sample", MainLauncher = true, Icon = "@drawable/icon")]
 	public class MainActivity : Activity
 	{
-		private static readonly MobileServiceClient MobileService = new MobileServiceClient (/* MOBILE SERVICE URL */);
+		private static readonly MobileServiceClient MobileService = new MobileServiceClient ("MOBILE SERVICE URL");
 
 		protected override void OnCreate (Bundle bundle)
 		{
