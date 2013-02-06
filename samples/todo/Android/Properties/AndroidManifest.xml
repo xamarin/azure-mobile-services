@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="internalOnly">
-  <uses-sdk android:targetSdkVersion="8" />
-  <application>
-  </application>
-  <uses-permission android:name="android.permission.INTERNET" />
+	<uses-sdk android:targetSdkVersion="8" />
+	<application android:label="Azure Mobile Services Sample"></application>
+	<uses-permission android:name="android.permission.INTERNET" />
 </manifest>

@@ -8,8 +8,8 @@
     <ProjectGuid>{8E35FADF-4690-4044-BA12-EB6011BA7486}</ProjectGuid>
     <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>Microsoft.Azure.Zumo.iOS</RootNamespace>
-    <AssemblyName>MicrosoftAzureZumoiOS</AssemblyName>
+    <RootNamespace>Microsoft.WindowsAzure.MobileServices</RootNamespace>
+    <AssemblyName>Microsoft.WindowsAzure.MobileServices.iOS</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugType>none</DebugType>

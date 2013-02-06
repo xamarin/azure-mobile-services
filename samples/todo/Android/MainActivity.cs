@@ -10,7 +10,7 @@ using Microsoft.WindowsAzure.MobileServices;
 
 namespace Sample
 {
-	[Activity (Label = "Sample", MainLauncher = true, Icon = "@drawable/icon")]
+	[Activity (Label = "Azure Mobile Services Sample", MainLauncher = true, Icon = "@drawable/icon")]
 	public class MainActivity : Activity
 	{
 		private static readonly MobileServiceClient MobileService = new MobileServiceClient ("MOBILE SERVICE URL");
