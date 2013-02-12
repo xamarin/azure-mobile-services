@@ -8,7 +8,7 @@ To create your first Mobile Service, login to your account at https://manage.win
 
 ![](WAMS-Create.png)
 
-## Connect a Mobile Service to your MonoTouch app written in C# 
+## Connect a Mobile Service to your Xamarin app
 
 After you've created a Mobile Service, use the following to connect your project:
 
