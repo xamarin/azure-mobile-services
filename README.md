@@ -12,6 +12,8 @@ To get the source code of our SDKs and samples via **git** just type:
 
     git clone https://github.com/xamarin/azure-mobile-services.git
     cd ./azure-mobile-services/
+    git submodule init
+    git submodule update
 
 ## Xamarin and Azure: MonoTouch for iOS and Mono for Android Client SDK
 
