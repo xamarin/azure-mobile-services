@@ -98,9 +98,7 @@
     <Compile Include="SampleViewController.designer.cs">
       <DependentUpon>SampleViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\Android\TodoItem.cs">
-      <Link>TodoItem.cs</Link>
-    </Compile>
+    <Compile Include="TodoItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainStoryboard.storyboard" />
