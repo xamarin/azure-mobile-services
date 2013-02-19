@@ -13,7 +13,8 @@ namespace Sample
 	[Activity (Label = "Azure Mobile Services Sample", MainLauncher = true, Icon = "@drawable/icon")]
 	public class MainActivity : Activity
 	{
-		private static readonly MobileServiceClient MobileService = new MobileServiceClient ("MOBILE SERVICE URL");
+		private static readonly MobileServiceClient MobileService =
+			new MobileServiceClient ("MOBILE SERVICE URL", "APPLICATION KEY");
 
 		protected override void OnCreate (Bundle bundle)
 		{
