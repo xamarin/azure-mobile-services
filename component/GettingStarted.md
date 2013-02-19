@@ -1,70 +1,63 @@
-## Sign up for Windows Azure
-To build an iOS app using Windows Azure Mobile Services, you'll first need to either login to your Windows Azure account at https://manage.windowsazure.com or create a new account.  You can sign up for a 90-day free trial at https://www.windowsazure.com/en-us/pricing/free-trial/.  
+##Getting Started
 
-## Create a New Mobile Service
-Every Windows Azure subscription receives free Mobile Services for up to 10 apps. 
+Mobile Services offers an easy way to store data in the cloud, authenticate users, and send push notifications.
 
-To create your first Mobile Service, login to your account at https://manage.windowsazure.com and click New on the bottom left portion of the page. You will then have the option to either create a new SQL database or connect to an existing one.
 
-![](WAMS-Create.png)
+To use Mobile Services with your iOS app, you will need a Windows Azure account.  If you already have an account, login to the [Windows Azure management portal](https://manage.windowsazure.com/).  If you are new to Windows Azure, you can sign up for a 90-day free trial [here](https://www.windowsazure.com/en-us/pricing/free-trial/).
 
-## Connect a Mobile Service to your Xamarin app
+To create a new Mobile Service after you've logged into the [management portal](https://manage.windowsazure.com/), select 'New' --> 'Compute' --> 'Mobile Service' --> 'Create.'  
+
+![](WAMS-New.PNG)
+
+Even though you will write the majority of your application in your preferred IDE, the management portal provides an easy way to work with three key Mobile Services features: storing data in the cloud, settuing up user authentication via third party services like Facebook, and sending push notifications.
+
+You can find the full Getting Started with Mobile Services tutorial [here]( http://go.microsoft.com/fwlink/?LinkId=282374).
+
+## Connect a Mobile Service to your MonoTouch app written in C# 
 
 After you've created a Mobile Service, use the following to connect your project:
 
 ```csharp
-using Microsoft.WindowsAzure.MobileServices;
-
+    using Microsoft.WindowsAzure.MobileServices;
 ...
-
-public static MobileServiceClient MobileService = new MobileServiceClient (
-	"https://yourMobileServiceName.azure-mobile.net/", 
-	"YOUR_APPLICATION_KEY"
+public static MobileServiceClient MobileService = new MobileServiceClient(
+"https://yourMobileServiceName.azure-mobile.net/", 
+"YOUR_APPLICATION_KEY"
 );
 ```
 
-To work with data in a table (here we're using a sample table called 'TodoItem', add the following class to your project:
+You can find value of your Mobile Service URL on the right-hand side of Dashboard and the value of your app key by clicking 'Manage Keys' at the bottom of the Dashboard.
 
+![](WAMS-Keys.png)
+
+##Store Data in the Cloud
+
+When you create a Mobile Service, you'll be prompted to either create a new SQL database for that Mobile Service or connect your Mobile Service to an existing one. 
+
+You then add a table to that SQL database by going to the 'Data' tab and hitting 'Create.'
+
+![](WAMS-EmptyData.png)
+
+You'll then be prompted to set permissions for the table.
+
+![](WAMS-DataPermissions.png)
 
 To store data in that table, use the following code snippet (originally from the [September 2012 announcement](http://blog.xamarin.com/xamarin-partners-with-microsoft-to-support-azure-mobile-services-on-android-and-ios/) of the Xamarin and Windows Azure partnership):
 
 ```csharp 
-public class TodoItem
-{
-		public int Id { get; set; }
-
-		[DataMember (Name = "text")]
-		public string Text { get; set; }
-
-		[DataMember (Name = "complete")]
-		public bool Complete { get; set; }
-}
-...
-
-var table = MobileService.GetTable<TodoItem> ();
-table.Where (ti => !ti.Complete)
-     .ToListAsync ()
-     .ContinueWith (t => items = t.Result, scheduler);
+    public class TodoItem
+    {
+        public int Id { get; set; }
+        [DataMember (Name = "text")]
+        public string Text { get; set; }
+        [DataMember (Name = "complete")]
+        public bool Complete { get; set; }
+    }
+    ...
+    this.table = MobileService.GetTable<TodoItem>();
+    this.table.Where (ti => !ti.Complete).ToListAsync()
+            .ContinueWith (t => { this.items = t.Result; }, scheduler);
 ```
-
-##Server-Side Scripts
-Mobile Services allows you to add business logic to CRUD operations through secure server-side scripts.  Currently, scripts must be written in JavaScript.
-
-To add a script, navigate to the 'DATA' tab on the dashbaord and select a table.
-
-![](WAMS-Script1.png)
-
-Then, under the 'SCRIPT' tab, choose either Insert, Update, Delete, or Read from the dropdown menu and copy in your script.  You can find samples for common scripts at http://msdn.microsoft.com/en-us/library/windowsazure/jj591477.aspx.
-
-![](WAMS-Script2.png)
-
-If you'd like to schedule a script to run periodically (rather than when triggerd by a particular event), visit the 'SCHEDULER' tab on the main dashboard and click 'Create a Scheduled Job.'  Then, set the interval at which you would like the script to run.
-
-![](WAMS-Scheduler2.png)
-
-Once you write the script, click 'Save' then 'Run Once.'  Check the 'LOGS' tab on the main dashboard for any errors.  If you're error-free, be sure to return to the 'SCHEDULER' tab and click 'Enable.'
-
-![](WAMS-Scheduler3.png)
 
 ### Documentation
 
@@ -78,9 +71,9 @@ Once you write the script, click 'Save' then 'Run Once.'  Check the 'LOGS' tab o
 
 - Developer Forum: http://social.msdn.microsoft.com/Forums/en-US/azuremobile/threads
 - Feature Requests: http://mobileservices.uservoice.com
-- Contact: [mobileservices@microsoft.com](mailto:mobileservices@microsoft.com)
-- Twitter: [@joshtwist](http://twitter.com/joshtwist) [@cloudnick](http://twitter.com/cloudnick) [@chrisrisner](http://twitter.com/chrisrisner) [@mlunes90](http://twitter.com/mlunes90)
+- Contact: mobileservices@microsoft.com
+- Twitter: @joshtwist @cloudnick @chrisrisner @mlunes90
 
-### Legal 
+###Legal 
 
 - Terms & Conditions: http://www.windowsazure.com/en-us/support/legal/
