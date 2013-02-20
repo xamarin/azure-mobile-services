@@ -13,7 +13,7 @@ Even though you will write the majority of your application in your preferred ID
 
 You can find the full Getting Started with Mobile Services tutorial [here]( http://go.microsoft.com/fwlink/?LinkId=282374).
 
-## Connect a Mobile Service to your MonoTouch app written in C# 
+## Connect a Mobile Service to your Xamarin app
 
 After you've created a Mobile Service, use the following to connect your project:
 
