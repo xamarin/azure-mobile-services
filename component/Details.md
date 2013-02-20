@@ -16,7 +16,8 @@ Once you've either created a new SQL database for your Mobile Service or connect
  	}
 
 Item item = new Item { Text = "Awesome item" };
-await App.MobileService.GetTable<Item>().InsertAsync(item);
+App.MobileService.GetTable<Item>().InsertAsync(item)
+	.ContinueWith (t => { /* success or failure */});
 ```
 
 Then use familiar LINQ syntax to query data.
@@ -33,8 +34,8 @@ Copy the Client ID and Client  Secret to the appropriate place in the Identity t
 To allow your users to login with their Facebook credentials, for example, you'd use this code: 
 
 ```csharp
-    var user = await App.MobileService
-                    .LoginAsync(MobileServiceAuthenticationProvider.Facebook);
+App.MobileService.LoginAsync(MobileServiceAuthenticationProvider.Facebook)
+	.ContinueWith (t => { /* t.Result is user */ });
 ```
 
 You can find the full Getting Started with Authentication tutorial [here](http://go.microsoft.com/fwlink/?LinkId=282376).
