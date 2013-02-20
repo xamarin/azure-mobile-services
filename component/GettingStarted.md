@@ -18,8 +18,9 @@ You can find the full Getting Started with Mobile Services tutorial [here]( http
 After you've created a Mobile Service, use the following to connect your project:
 
 ```csharp
-    using Microsoft.WindowsAzure.MobileServices;
+using Microsoft.WindowsAzure.MobileServices;
 ...
+
 public static MobileServiceClient MobileService = new MobileServiceClient(
 "https://yourMobileServiceName.azure-mobile.net/", 
 "YOUR_APPLICATION_KEY"
@@ -45,18 +46,20 @@ You'll then be prompted to set permissions for the table.
 To store data in that table, use the following code snippet (originally from the [September 2012 announcement](http://blog.xamarin.com/xamarin-partners-with-microsoft-to-support-azure-mobile-services-on-android-and-ios/) of the Xamarin and Windows Azure partnership):
 
 ```csharp 
-    public class TodoItem
-    {
-        public int Id { get; set; }
-        [DataMember (Name = "text")]
-        public string Text { get; set; }
-        [DataMember (Name = "complete")]
-        public bool Complete { get; set; }
-    }
-    ...
-    this.table = MobileService.GetTable<TodoItem>();
-    this.table.Where (ti => !ti.Complete).ToListAsync()
-            .ContinueWith (t => { this.items = t.Result; }, scheduler);
+public class TodoItem
+{
+	public int Id { get; set; }
+	[DataMember (Name = "text")]
+	public string Text { get; set; }
+	[DataMember (Name = "complete")]
+	public bool Complete { get; set; }
+}
+
+...
+
+this.table = MobileService.GetTable<TodoItem>();
+this.table.Where (ti => !ti.Complete).ToListAsync()
+	.ContinueWith (t => { this.items = t.Result; }, scheduler);
 ```
 
 ### Documentation

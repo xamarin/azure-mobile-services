@@ -10,13 +10,13 @@ When you create a new Mobile Service, you'll be prompted to either create a new 
 Once you've either created a new SQL database for your Mobile Service or connected your Mobile Service to an database, declare your data in your app and insert it using the following syntax:
 
 ```csharp
-    public class Item {
-              public int Id { get; set; }
- 	          public string Text { get; set; }
- 	}
+public class Item {
+	public int Id { get; set; }
+	public string Text { get; set; }
+}
 
 Item item = new Item { Text = "Awesome item" };
-App.MobileService.GetTable<Item>().InsertAsync(item)
+App.MobileService.GetTable<Item>().InsertAsync (item)
 	.ContinueWith (t => { /* success or failure */});
 ```
 
@@ -34,7 +34,7 @@ Copy the Client ID and Client  Secret to the appropriate place in the Identity t
 To allow your users to login with their Facebook credentials, for example, you'd use this code: 
 
 ```csharp
-App.MobileService.LoginAsync(MobileServiceAuthenticationProvider.Facebook)
+App.MobileService.LoginAsync (MobileServiceAuthenticationProvider.Facebook)
 	.ContinueWith (t => { /* t.Result is user */ });
 ```
 
@@ -48,7 +48,7 @@ To send push notifications, upload your developer certificate under the authenti
 Mobile Services allows you to easily send push notifications via Apple Push Notification Services (APNS)
 
 ```js
-    push.apns.send(devicetoken, { alert: "Hello to Apple World from Mobile Services!"});
+push.apns.send (devicetoken, { alert: "Hello to Apple World from Mobile Services!"});
 ```
 
 You can find the full Getting Started with Push Notifications tutorial [here](http://go.microsoft.com/fwlink/?LinkId=282377).
