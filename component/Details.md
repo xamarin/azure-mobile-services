@@ -1,46 +1,30 @@
-Mobile Services is a quick and easy way to add a scalable and secure backend hosted in the Windows Azure cloud to your iOS apps. 
+##Data
+Mobile Services gives you an easy way to store data in the cloud.  
 
-## Getting Started
-
-To use Mobile Services with your iOS app, you will need a Windows Azure account.  If you already have an account, login to the [Windows Azure management portal](https://manage.windowsazure.com/).  If you are new to Windows Azure, you can sign up for a 90-day free trial [here](https://www.windowsazure.com/en-us/pricing/free-trial/).
-
-To create a new Mobile Service after you've logged into the [management portal](https://manage.windowsazure.com/), select 'New' --> 'Compute' --> 'Mobile Service' --> 'Create.'  
-
-![](WAMS-New.png)
-
-Even though you will write the majority of your application in your preferred IDE, the management portal provides an easy way to work with three key Mobile Services features: storing data in the cloud, settuing up user authentication via third party services like Facebook, and sending push notifications.
-
-You can find the full Getting Started with Mobile Services tutorial [here](https://www.windowsazure.com/en-us/develop/mobile/tutorials/get-started/).
-
-## Data
-Store data in the cloud with Windows Auzre SQL database, Blob Storage, and Table Storage.
-
-Set up a new SQL database or connect to an existing one.
+When you create a new Mobile Service, you'll be prompted to either create a new SQL database or connect to an existing one.  To reduce latency, be sure to deploy your Mobile Service and SQL database to the same data center.
 
 ![](WAMS-SQLdb1.png)
 
 ![](WAMS-SQLdb2.png)
 
-To access blob storage or table storage, copy the appropirate code snippet below into a script.  By doing so you will  obtain a reference to a Windows Azure blob or table (after which you can query it or insert data into it).
+Once you've either created a new SQL database for your Mobile Service or connected your Mobile Service to an database, declare your data in your app and insert it using the following syntax:
 
-Blob:
+```csharp
+    public class Item {
+              public int Id { get; set; }
+ 	          public string Text { get; set; }
+ 	}
 
-```js
-var azure = require('azure');
-var blobService = azure.createBlobService("<< account name >>", "<< access key >>");
+Item item = new Item { Text = "Awesome item" };
+await App.MobileService.GetTable<Item>().InsertAsync(item);
 ```
 
-Table:
+Then use familiar LINQ syntax to query data.
 
-```js
-var azure = require('azure');
-var tableService = azure.createTableService("<< account name >>", "<< access key >>");
-```
-
-You can find the full Getting Started with Data [here](https://www.windowsazure.com/en-us/develop/mobile/tutorials/get-started-with-data-dotnet/).
+You can find the full Getting Started with Data tutorial [here](http://go.microsoft.com/fwlink/?LinkId=282375).
 
 ##Auth
-You can authenticate users through thier Facebook, Twitter, Microsoft, or Google credentials. (A single app can simultaneously support multiple forms of identity so you can of course offer your users a choice of how to login.) 
+You can authenticate users through their Facebook, Twitter, Microsoft, or Google credentials. (A single Mobile Service can simultaneously support multiple forms of identity so you can of course offer your users a choice of how to login.) 
 
 Copy the Client ID and Client  Secret to the appropriate place in the Identity tab. 
 
@@ -49,15 +33,11 @@ Copy the Client ID and Client  Secret to the appropriate place in the Identity t
 To allow your users to login with their Facebook credentials, for example, you'd use this code: 
 
 ```csharp
-App.MobileService
-	.LoginAsync (MobileServiceAuthenticationProvider.Facebook)
-	.ContinueWith (t => {
-		var user = t.Result;
-		...
-	});
+    var user = await App.MobileService
+                    .LoginAsync(MobileServiceAuthenticationProvider.Facebook);
 ```
 
-You can find the full Getting Started with Authentication tutorial [here](https://www.windowsazure.com/en-us/develop/mobile/tutorials/get-started-with-users-dotnet/).
+You can find the full Getting Started with Authentication tutorial [here](http://go.microsoft.com/fwlink/?LinkId=282376).
 
 ##Push
 To send push notifications, upload your developer certificate under the authentication tab in the Windows Azure portal.
@@ -67,22 +47,32 @@ To send push notifications, upload your developer certificate under the authenti
 Mobile Services allows you to easily send push notifications via Apple Push Notification Services (APNS)
 
 ```js
-push.apns.send(devicetoken, { alert: "Hello to Apple World from Mobile Services!"});
+    push.apns.send(devicetoken, { alert: "Hello to Apple World from Mobile Services!"});
 ```
 
-You can also provide a script (invoked periodically while your service is active) to check for expired device totkens and channels.
+You can find the full Getting Started with Push Notifications tutorial [here](http://go.microsoft.com/fwlink/?LinkId=282377).
 
-![](WAMS-push2.png)
+##Scripts
+Mobile Services allows you to add business logic to CRUD operations through secure server-side scripts.  Currently, server-side scripts must be written in JavaScript even though client side code is written in C#.
 
-```js
-push.apns.getFeedback ({ 
-	success: function (results) {
-				// results is an array of objects with a deviceToken and time properties 
-	}
-});
-```
+To add a script, navigate to the 'DATA' tab on the dashbaord and select a table.
 
-You can find the full Getting Started with Push Notifications tutorial [here](https://www.windowsazure.com/en-us/develop/mobile/tutorials/get-started-with-push-ios/).
+![](WAMS-Script1.png)
+
+Then, under the 'SCRIPT' tab, choose either Insert, Update, Delete, or Read from the dropdown menu and copy in your script.  You can find samples for common scripts at http://msdn.microsoft.com/en-us/library/windowsazure/jj591477.aspx.
+
+Learn how to validate data with scripts [here](http://go.microsoft.com/fwlink/?LinkId=282378) and how to authenticate users with scripts [here](http://go.microsoft.com/fwlink/?LinkId=282379).
+
+![](WAMS-Script2.png)
+
+If you'd like to schedule a script to run periodically (rather than when triggerd by a particular event), visit the 'SCHEDULER' tab on the main dashboard and click 'Create a Scheduled Job.'  Then, set the interval at which you would like the script to run.
+
+![](WAMS-Scheduler2.png)
+
+Once you write the script, click 'Save' then 'Run Once.'  Check the 'LOGS' tab on the main dashboard for any errors.  If you're error-free, be sure to return to the 'SCHEDULER' tab and click 'Enable.'
+
+You can find the full tutorial for scheduling recurring jobs [here]( http://go.microsoft.com/fwlink/?LinkId=282380).
 
 
 To learn about more Mobile Services, visit the [Windows Azure Mobile Developer Center](https://www.windowsazure.com/en-us/develop/mobile/).
+
