@@ -213,7 +213,7 @@ namespace Microsoft.WindowsAzure.MobileServices
             JsonObject updatedObj = updated.AsObject();
             if (originalObj != null && updatedObj != null)
             {
-                foreach (KeyValuePair<string, JsonValue> property in updatedObj.GetPropertyValues())
+                foreach (KeyValuePair<string, IJsonValue> property in updatedObj.GetPropertyValues())
                 {
                     originalObj.SetNamedValue(property.Key, property.Value);
                 }

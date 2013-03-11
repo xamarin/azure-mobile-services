@@ -51,9 +51,9 @@ namespace Windows.Data.Json
 			get { return JsonValueType.Object; }
 		}
 
-		public JsonValue GetNamedValue (string name)
+		public IJsonValue GetNamedValue (string name)
 		{
-			return (JsonValue)this[name];
+			return (IJsonValue)this[name];
 		}
 
 		public void SetNamedValue (string name, IJsonValue value)

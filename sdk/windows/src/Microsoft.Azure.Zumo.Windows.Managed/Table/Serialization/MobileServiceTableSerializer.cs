@@ -101,7 +101,7 @@ namespace Microsoft.WindowsAzure.MobileServices
 
             // Walk through all of the members defined in the object and
             // deserialize them into the instance one at a time
-            foreach (KeyValuePair<string, JsonValue> assignment in obj.GetPropertyValues().OrderBy(a => type.GetMemberOrder(a.Key)))
+            foreach (KeyValuePair<string, IJsonValue> assignment in obj.GetPropertyValues().OrderBy(a => type.GetMemberOrder(a.Key)))
             {
                 // Look up the instance member corresponding to the JSON member
                 SerializableMember member = null;
