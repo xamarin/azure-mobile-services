@@ -118,6 +118,47 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// </summary>
         private bool visited;
 
+        private static bool falseflag = false;
+        static FilterBuildingExpressionVisitor()
+        {
+            // This is a work-around to ensure the linker does not remove
+            // these methods as they're looked up ahead of time
+            if (falseflag)
+            {
+                // Static Methods
+                double dblvalue = Math.Floor (1d);
+                decimal dcmvalue = Math.Floor (1m);
+                dblvalue = Math.Ceiling (1d);
+                dcmvalue = Math.Ceiling (1m);
+                dblvalue = Math.Round (1d);
+                dcmvalue = Math.Round (1m);
+
+                // Instance Methods
+                string strvalue = String.Concat ("abc", "def");
+                strvalue = strvalue.ToLower();
+                strvalue = strvalue.ToUpper();
+                strvalue = strvalue.Trim();
+                bool bvalue = strvalue.StartsWith ("a");
+                bvalue = strvalue.EndsWith ("b");
+                int ivalue = strvalue.IndexOf ('c');
+                ivalue = strvalue.IndexOf ("c");
+                bvalue = strvalue.Contains ("c");
+                strvalue = strvalue.Replace ("c", "d");
+                strvalue = strvalue.Replace ('c', 'd');
+                strvalue = strvalue.Substring (0);
+                strvalue = strvalue.Substring (0, 1);
+
+                // Instance Properties
+                ivalue = strvalue.Length;
+                ivalue = DateTime.Now.Day;
+                ivalue = DateTime.Now.Month;
+                ivalue = DateTime.Now.Year;
+                ivalue = DateTime.Now.Hour;
+                ivalue = DateTime.Now.Minute;
+                ivalue = DateTime.Now.Second;
+            }
+        }
+
         /// <summary>
         /// Translate an expression tree into a compiled OData query.
         /// </summary>

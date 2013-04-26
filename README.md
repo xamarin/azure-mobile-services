@@ -23,11 +23,6 @@ Our client SDK makes it incredibly easy to use Mobile Services from your MonoTou
 
 The SDK requires MonoTouch for iOS or Mono for Android.
 
-### Limitations
-
-For MonoTouch, in your "Additional mtouch arguments" section, ```--linkskip=mscorlib``` may be required if SDK linking is enabled.
-Additionally, the SDK does not provide support for push notifications, this is currently limited to Windows 8.
-
 ### Running the Tests
 
 The MonoTouch SDK has a suite of unit tests. 
