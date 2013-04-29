@@ -149,6 +149,8 @@ namespace Microsoft.WindowsAzure.MobileServices
                 this.RequestAsync("POST", LoginAsyncUriFragment + "/" + providerName, token)
                     .ContinueWith (t =>
                     {
+                        this.LoginInProgress = false;
+
                         if (t.IsCanceled)
                             tcs.SetCanceled();
                         else if (t.IsFaulted)
@@ -175,6 +177,8 @@ namespace Microsoft.WindowsAzure.MobileServices
 
                 auth.Error += (o, e) =>
                 {
+                    this.LoginInProgress = false;
+
                     if (controller != null)
                         controller.DismissModalViewControllerAnimated (true);
                     if (popover != null)
@@ -186,6 +190,8 @@ namespace Microsoft.WindowsAzure.MobileServices
                 
                 auth.Completed += (o, e) =>
                 {
+                    this.LoginInProgress = false;
+
                     if (controller != null)
                         controller.DismissModalViewControllerAnimated (true);
                     if (popover != null)

@@ -88,6 +88,8 @@ namespace Microsoft.WindowsAzure.MobileServices
                 this.RequestAsync("POST", LoginAsyncUriFragment + "/" + providerName, token)
                     .ContinueWith (t =>
                     {
+                        this.LoginInProgress = false;
+
                         if (t.IsCanceled)
                             tcs.SetCanceled();
                         else if (t.IsFaulted)
@@ -109,12 +111,16 @@ namespace Microsoft.WindowsAzure.MobileServices
                 WebRedirectAuthenticator auth = new WebRedirectAuthenticator (startUri, endUri);
                 auth.Error += (o, e) =>
                 {
+                    this.LoginInProgress = false;
+
                     Exception ex = e.Exception ?? new Exception (e.Message);
                     tcs.TrySetException (ex);
                 };
                 
                 auth.Completed += (o, e) =>
                 {
+                    this.LoginInProgress = false;
+
                     if (!e.IsAuthenticated)
                         tcs.TrySetCanceled();
                     else
