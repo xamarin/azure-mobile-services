@@ -13,7 +13,7 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// <summary>
         /// Log a user into a Mobile Services application given a provider name.
         /// </summary>
-        /// <param name="UIViewController" type="MonoTouch.UIKit.UIViewController">
+        /// <param name="viewController" type="MonoTouch.UIKit.UIViewController">
         /// UIViewController used to display modal login UI on iPhone/iPods.
         /// </param>
         /// <param name="provider" type="MobileServiceAuthenticationProvider">
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// <summary>
         /// Log a user into a Mobile Services application given a provider name.
         /// </summary>
-        /// <param name="UIViewController" type="MonoTouch.UIKit.UIViewController">
+        /// <param name="viewController" type="MonoTouch.UIKit.UIViewController">
         /// UIViewController used to display modal login UI on iPhone/iPods.
         /// </param>
         /// <param name="provider" type="MobileServiceAuthenticationProvider">
@@ -49,10 +49,10 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// <summary>
         /// Log a user into a Mobile Services application given a provider name.
         /// </summary>
-        /// <param name="RectangleF" type="System.Drawing.RectangleF">
+        /// <param name="rectangle" type="System.Drawing.RectangleF">
         /// The area in <paramref name="view"/> to anchor to.
-        /// </para>
-        /// <param name="UIView" type="MonoTouch.UIKit.UIView">
+        /// </param>
+        /// <param name="view" type="MonoTouch.UIKit.UIView">
         /// UIView used to display a popover from on iPad.
         /// </param>
         /// <param name="provider" type="MobileServiceAuthenticationProvider">
@@ -70,10 +70,10 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// <summary>
         /// Log a user into a Mobile Services application given a provider name.
         /// </summary>
-        /// <param name="RectangleF" type="System.Drawing.RectangleF">
+        /// <param name="rectangle" type="System.Drawing.RectangleF">
         /// The area in <paramref name="view"/> to anchor to.
-        /// </para>
-        /// <param name="UIView" type="MonoTouch.UIKit.UIView">
+        /// </param>
+        /// <param name="view" type="MonoTouch.UIKit.UIView">
         /// UIView used to display a popover from on iPad.
         /// </param>
         /// <param name="provider" type="MobileServiceAuthenticationProvider">
@@ -91,7 +91,7 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// <summary>
         /// Log a user into a Mobile Services application given a provider name.
         /// </summary>
-        /// <param name="UIBarButtonItem" type="MonoTouch.UIKit.UIBarButtonItem">
+        /// <param name="barButtonItem" type="MonoTouch.UIKit.UIBarButtonItem">
         /// UIBarButtonItem used to display a popover from on iPad.
         /// </param>
         /// <param name="provider" type="MobileServiceAuthenticationProvider">
@@ -109,7 +109,7 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// <summary>
         /// Log a user into a Mobile Services application given a provider name.
         /// </summary>
-        /// <param name="UIBarButtonItem" type="MonoTouch.UIKit.UIBarButtonItem">
+        /// <param name="barButtonItem" type="MonoTouch.UIKit.UIBarButtonItem">
         /// UIBarButtonItem used to display a popover from on iPad.
         /// </param>
         /// <param name="provider" type="MobileServiceAuthenticationProvider">
