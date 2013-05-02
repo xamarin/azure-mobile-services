@@ -133,9 +133,9 @@ namespace Microsoft.Azure.Zumo.Win8.CSharp.Test
 
             // Verify that we don't blow up by trying to include the Foo
             // property in the compiled query
-//            Compile ((IMobileServiceTable<Product> table) =>
-//                from p in table
-//                select new { Foo = p.Name });
+            Compile ((IMobileServiceTable<Product> table) =>
+                from p in table
+                select new { Foo = p.Name });
         }
 
         [Test]
