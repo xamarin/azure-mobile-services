@@ -170,6 +170,8 @@ namespace Microsoft.WindowsAzure.MobileServices
                 Uri endUri = new Uri(this.ApplicationUri, LoginAsyncDoneUriFragment);
 
                 WebRedirectAuthenticator auth = new WebRedirectAuthenticator (startUri, endUri);
+                auth.ClearCookiesBeforeLogin = false;
+
                 UIViewController c = auth.GetUI();
 
                 UIViewController controller = null;
@@ -226,6 +228,16 @@ namespace Microsoft.WindowsAzure.MobileServices
             }
             
             return tcs.Task;
+        }
+
+        /// <summary>
+        /// Log a user out of a Mobile Services application.
+        /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Logout", Justification = "Logout is preferred by design")]
+        public void Logout()
+        {
+            this.CurrentUser = null;
+            WebAuthenticator.ClearCookies();
         }
 
         private void SetupCurrentUser (IJsonValue value)

@@ -236,15 +236,6 @@ namespace Microsoft.WindowsAzure.MobileServices
         }
 
         /// <summary>
-        /// Log a user out of a Mobile Services application.
-        /// </summary>
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Logout", Justification = "Logout is preferred by design")]
-        public void Logout()
-        {
-            this.CurrentUser = null;
-        }
-
-        /// <summary>
         /// Perform a web request and include the standard Mobile Services
         /// headers.
         /// </summary>
