@@ -93,6 +93,12 @@ namespace Microsoft.WindowsAzure.MobileServices
 	            Task<Stream>.Factory.FromAsync (request.BeginGetRequestStream, request.EndGetRequestStream, null)
 		            .ContinueWith (t =>
 		            {
+					    if (t.IsFaulted)
+					    {
+						    tcs.SetException (t.Exception.InnerExceptions);
+						    return;
+					    }
+
 			            using (StreamWriter writer = new StreamWriter (t.Result))
 				            writer.Write (Content);
 
