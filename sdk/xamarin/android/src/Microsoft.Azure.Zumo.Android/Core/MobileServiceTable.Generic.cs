@@ -393,6 +393,9 @@ namespace Microsoft.WindowsAzure.MobileServices
             return DeleteAsync (value, parameters)
                 .ContinueWith (t =>
                 {
+                    if (t.IsFaulted)
+                        throw t.Exception.InnerException;
+
                     // Clear the instance ID since it's no longer associated with that
                     // ID on the server (note that reflection is goodly enough to turn
                     // null into the correct value for us).
