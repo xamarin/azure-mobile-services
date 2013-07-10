@@ -79,6 +79,18 @@ namespace Microsoft.WindowsAzure.MobileServices
         Task InsertAsync(T instance);
 
         /// <summary>
+        /// Insert a new instance into the table.
+        /// </summary>
+        /// <param name="instance">The instance to insert.</param>
+        /// <param name="parameters">
+        /// A dictionary of user-defined parameters and values to include in the request URI query string.
+        /// </param>
+        /// <returns>
+        /// A task that will complete when the insertion has finished.
+        /// </returns>
+        Task InsertAsync(T instance, IDictionary<string, string> parameters);
+
+        /// <summary>
         /// Updates an instance in the table.
         /// </summary>
         /// <param name="instance">The instance to update.</param>
