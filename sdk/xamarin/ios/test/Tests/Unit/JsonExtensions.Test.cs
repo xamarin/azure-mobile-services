@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Zumo.Win8.CSharp.Test
                 .Set("n", 2.0)
                 .Set("s", "text");
             
-            IDictionary<string, JsonValue> values = 
+            IDictionary<string, IJsonValue> values = 
                 obj.GetPropertyValues().ToDictionary(p => p.Key, p => p.Value);
             Assert.AreEqual(3, values.Count);
             Assert.AreEqual(true, values["b"].AsBool());

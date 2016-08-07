@@ -130,14 +130,14 @@ namespace Microsoft.WindowsAzure.MobileServices
         /// </summary>
         /// <param name="value">A JSON object.</param>
         /// <returns>The name/value pairs of the JSON object.</returns>
-        public static IEnumerable<KeyValuePair<string, JsonValue>> GetPropertyValues(this JsonObject value)
+        public static IEnumerable<KeyValuePair<string, IJsonValue>> GetPropertyValues(this JsonObject value)
         {
             if (value != null)
             {
                 foreach (string key in value.Keys)
                 {
-                    JsonValue val = value.GetNamedValue(key);
-                    yield return new KeyValuePair<string, JsonValue>(key, val);
+                   IJsonValue val = value.GetNamedValue(key);
+                    yield return new KeyValuePair<string, IJsonValue>(key, val);
                 }
             }
         }
